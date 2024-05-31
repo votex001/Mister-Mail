@@ -5,14 +5,9 @@ import { MdRestoreFromTrash } from 'react-icons/md';
 import { defaultInfo } from '../services/default-emails';
 
 
-export function EmailPreview({ email, isOnStarred, sendToTrash, onRemove, onRead, isRemovedAtTime }) {
+export function EmailPreview({ email, onToggleStar, onSendToTrash, onRemove, onRead, isRemovedAtTime }) {
     const removedAtTime = isRemovedAtTime ? new Date(email.removedAt).toJSON() : new Date(email.sentAt).toJSON()
     const date = new Date(removedAtTime).toLocaleDateString();
-    const read = email.isRead ? 'read' : '';
-    const starIcon = email.isStarred ? <IoIosStar className='is-starred' onClick={() => isOnStarred(email)} /> : <IoMdStarOutline onClick={() => isOnStarred(email)} />;
-    const readIcon = email.isRead ? <IoMdMailUnread className='side-icon' onClick={() => onRead(email)} /> : <IoMdMailOpen className='side-icon' onClick={() => onRead(email)} />;
-    const trashIcon = email.inTrash ? <MdRestoreFromTrash onClick={() => sendToTrash(email)} className='side-icon' /> : <IoMdTrash className='side-icon' onClick={() => sendToTrash(email)} />;
-    const deleteForever = email.inTrash && <TiDeleteOutline onClick={() => onRemove(email.id)} className='side-icon' />;
 
     function slicedName(name) {
         if (name === defaultInfo.loggedinUser.email) return "Me"
@@ -20,18 +15,27 @@ export function EmailPreview({ email, isOnStarred, sendToTrash, onRemove, onRead
         return capitalName.split('@')[0];
     }
     return (
-        <section className={`email ${read} flex`}>
-            <div className='flex info'>
-                {!email.inTrash && starIcon}
-                <Link to={`${email.id}`} className='h3'>
-                    <h3>{slicedName(email.from)}</h3>
-                </Link>
-                <Link to={`${email.id}`} className='subject'>{email.subject}</Link>
-                <Link to={`${email.id}`} className='date'>{date}</Link>
-            </div>
-            {trashIcon}
-            {readIcon}
-            {deleteForever}
+        <section className={`email ${email.isRead ? 'read' : ''} ${email.inTrash ? "trash" : ""}`}>
+            {!email.inTrash &&
+                <button className='email-icon star' onClick={() => onToggleStar(email)}>
+                    {email.isStarred ? <IoIosStar className='is-starred' /> : <IoMdStarOutline />}
+                </button>
+            }
+            <Link className='link' to={`${email.id}`}>
+                <h3 className='name'>{slicedName(email.from)}</h3>
+                <p className='subject'>{email.subject}</p>
+                <p className='date'>{date}</p>
+            </Link>
+            <button className='email-icon trash' onClick={() => onSendToTrash(email)}>
+                {email.inTrash ? <MdRestoreFromTrash className='side-icon' /> : <IoMdTrash className='side-icon' />}
+            </button>
+            <button className='email-icon' onClick={() => onRead(email)}>
+                {email.isRead ? <IoMdMailUnread className='side-icon' /> : <IoMdMailOpen className='side-icon' />}
+            </button>
+            {email.inTrash &&
+                <button className='email-icon removeh' onClick={() => onRemove(email.id)}>
+                    {<TiDeleteOutline className='side-icon' />}
+                </button>}
         </section>
     )
 }

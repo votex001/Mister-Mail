@@ -28,7 +28,7 @@ export function EmailIndex() {
         })
     }
 
-    async function isOnStarred(mail) {
+    async function onToggleStar(mail) {
         const updatedMail = {
             ...mail,
             isStarred: !mail.isStarred
@@ -37,7 +37,7 @@ export function EmailIndex() {
         updateFilter()
     }
 
-    async function sendToTrash(mail) {
+    async function onSendToTrash(mail) {
         const updatedMail = {
             ...mail,
             inTrash: !mail.inTrash,
@@ -94,8 +94,8 @@ export function EmailIndex() {
                     <EmailList
                         emails={emails}
                         isRemovedAtTime={params.folder === 'basket'}
-                        isOnStarred={isOnStarred}
-                        sendToTrash={sendToTrash}
+                        onToggleStar={onToggleStar}
+                        onSendToTrash={onSendToTrash}
                         onRemove={onRemove}
                         onRead={onRead}
                     />

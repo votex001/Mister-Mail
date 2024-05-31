@@ -1,7 +1,7 @@
 import { EmailPreview } from './EmailPreview';
 
 
-export function EmailList({ emails, isRemovedAtTime, isOnStarred, sendToTrash, onRemove, onRead }) {
+export function EmailList({ emails, isRemovedAtTime, onToggleStar, onSendToTrash, onRemove, onRead }) {
     return (
         <>
             {emails &&
@@ -12,8 +12,8 @@ export function EmailList({ emails, isRemovedAtTime, isOnStarred, sendToTrash, o
                                 isRemovedAtTime={isRemovedAtTime}
                                 email={email}
                                 key={email.id}
-                                isOnStarred={isOnStarred}
-                                sendToTrash={sendToTrash}
+                                onToggleStar={onToggleStar}
+                                onSendToTrash={onSendToTrash}
                                 onRemove={onRemove}
                                 onRead={onRead}
                             />)
