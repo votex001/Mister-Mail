@@ -90,7 +90,7 @@ export function EmailIndex() {
             {!params.mailId ?
                 (<ul className="email-list">
                     {searchParams.get("compose") === "true" && <Compose getNewNessage={getNewNessage} />}
-                    <Header searchByName={searchByName} />
+                    <Header searchByName={searchByName} /> 
                     <EmailList
                         emails={emails}
                         isRemovedAtTime={params.folder === 'basket'}

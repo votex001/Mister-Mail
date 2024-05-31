@@ -71,6 +71,7 @@ async function emailsCounter(){
   }, { unread: 0, bascket: 0, starred: 0 })
 }
 
+
 // Get an email by ID
 function getById(id) {
   return storageService.get(STORAGE_KEY, id)

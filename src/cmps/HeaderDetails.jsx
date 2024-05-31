@@ -5,6 +5,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { useNavigate, useParams } from "react-router";
 import { mailService } from "../services/mail.service";
 
+
 export function HeaderDetails({mail}){
     const navigate = useNavigate();
     const params = useParams()

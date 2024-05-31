@@ -22,7 +22,7 @@ export function EmailDetails() {
 
   return (
     <div className="email-details">
-      <HeaderDetails mail={mail} />
+      <HeaderDetails mail={mail} /> 
       {mail && (
         <div className="details-main">
           <ul>

@@ -15,6 +15,7 @@ export function SideBar({ emails }) {
   const [details, setDetails] = useState({ untead: 0, basket: 0, starred: 0 })
   const [searchParams, setSearchParams] = useSearchParams()
 
+  
 
   useEffect(() => {
     loadDetails ()

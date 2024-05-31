@@ -13,7 +13,6 @@ export function NavFolders({details}){
      starred: <FaStar />,
      bascket: <FaRegTrashAlt />
     }
-   
     return(
         <>
       {Object.keys(folders).map(folderName=>{

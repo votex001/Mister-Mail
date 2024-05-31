@@ -4,6 +4,7 @@ import { IoIosStar, IoMdMailOpen, IoMdMailUnread, IoMdStarOutline, IoMdTrash } f
 import { MdRestoreFromTrash } from 'react-icons/md';
 import { defaultInfo } from '../services/default-emails';
 
+
 export function EmailPreview({ email, isOnStarred, sendToTrash, onRemove, onRead, isRemovedAtTime }) {
     const removedAtTime = isRemovedAtTime ? new Date(email.removedAt).toJSON() : new Date(email.sentAt).toJSON()
     const date = new Date(removedAtTime).toLocaleDateString();

@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { defaultInfo } from '../services/default-emails';
 
+
 export function Compose({ getNewNessage }) {
     const [_, setSearchParams] = useSearchParams();
 
