@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { mailService } from "../services/mail.service";
 
 import { Header } from "../cmps/Header";
+import { HeaderDetails } from "../cmps/HeaderDetails";
 
 export function EmailDetails() {
   const [mail, setMail] = useState()
@@ -21,7 +22,7 @@ export function EmailDetails() {
 
   return (
     <div className="email-details">
-      <Header mail={mail} />
+      <HeaderDetails mail={mail} />
       {mail && (
         <div className="details-main">
           <ul>

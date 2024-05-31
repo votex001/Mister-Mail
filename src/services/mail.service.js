@@ -9,7 +9,8 @@ export const mailService = {
   remove,
   getById,
   getDefaultFilter,
-  buildFilter
+  buildFilter,
+  emailsCounter
 }
 
 const STORAGE_KEY = 'emails'
@@ -55,11 +56,19 @@ function buildFilter(folder) {
     all: { sent: 'any' },
     unread: { isRead: false },
     starred: { isStarred: true,sent: 'any' },
-    trash: { inTrash: true},
+    bascket: { inTrash: true},
     sent: { sent: true },
   };
-  return { ...filterMap[folder] };
-
+  return filterMap[folder] ;
+}
+async function emailsCounter(){
+  const emails = await query()
+  return emails?.reduce((a, b) => {
+    if (!b.isRead && !b.inTrash) a.unread++
+    if (b.inTrash ) a.bascket++
+    if (b.isStarred ) a.starred++
+    return a
+  }, { unread: 0, bascket: 0, starred: 0 })
 }
 
 // Get an email by ID

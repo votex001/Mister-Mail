@@ -9,7 +9,7 @@ export default defineConfig({
     assetsDir: 'assets',
   },
   server: {
-    host: "192.168.1.114",
+    host: true,
     open:"/#/mail"
   },
   base: './',

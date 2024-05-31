@@ -93,7 +93,7 @@ export function EmailIndex() {
                     <Header searchByName={searchByName} />
                     <EmailList
                         emails={emails}
-                        isRemovedAtTime={params.folder === 'trash'}
+                        isRemovedAtTime={params.folder === 'basket'}
                         isOnStarred={isOnStarred}
                         sendToTrash={sendToTrash}
                         onRemove={onRemove}
