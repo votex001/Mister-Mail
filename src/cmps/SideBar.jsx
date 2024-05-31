@@ -8,24 +8,13 @@ import { NavFolders } from './NavForders'
 import img from '/icon.svg'
 import { GoPencil } from 'react-icons/go'
 
-
 export function SideBar({ emails }) {
-
-  // Initialize the state variables
-  const [details, setDetails] = useState({ untead: 0, basket: 0, starred: 0 })
+  const [details, setDetails] = useState({ unread: 0, basket: 0, starred: 0 })
   const [searchParams, setSearchParams] = useSearchParams()
 
-  
-
   useEffect(() => {
-    loadDetails ()
+    loadDetails()
   }, [emails])
-
-
-  async function loadDetails () {
-    const newDetails = await mailService.emailsCounter()
-    setDetails(newDetails) // Update the state with the new details
-  }
 
   function onComposeClick() {
     if (!searchParams.get('compose')) {
@@ -41,11 +30,19 @@ export function SideBar({ emails }) {
     }
   }
 
-  // Render the sidebar with the navigation links
+  async function loadDetails() {
+    const newDetails = await mailService.emailsCounter()
+    setDetails(newDetails)
+  }
+
   return (
     <nav className={`side-bar `}>
-      <section className="logo"><img src={img} /> MisterMail</section>
-      <button className="compose" onClick={onComposeClick}><GoPencil /> Compose</button>
+      <section className="logo">
+        <img src={img} /> MisterMail
+      </section>
+      <button className="compose" onClick={onComposeClick}>
+        <GoPencil /> Compose
+      </button>
       <NavFolders details={details} />
     </nav>
   )

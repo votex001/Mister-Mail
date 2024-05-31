@@ -5,7 +5,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "scripts": {
+    "format": "npx prettier --write.",
     "dev": "vite",
     "save": "git add . && git commit -e && git push",
     "build": "vite build",
@@ -32,6 +36,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "gh-pages": "^6.1.1",
+    "husky": "^9.0.11",
     "vite": "^4.4.5",
     "webpack-cli": "^5.1.4"
   }

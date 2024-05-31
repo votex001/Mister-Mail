@@ -40,8 +40,8 @@
   margin-bottom: 5px;
 }
 
-.compose-dialog input[type="email"],
-.compose-dialog input[type="text"],
+.compose-dialog input[type='email'],
+.compose-dialog input[type='text'],
 .compose-dialog textarea {
   width: 100%;
   padding: 10px;
@@ -57,7 +57,7 @@
 }
 
 .compose-dialog button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   font-size: 14px;
