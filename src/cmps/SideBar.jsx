@@ -1,8 +1,7 @@
 //services
 import { useEffect, useState } from 'react'
-import { NavLink, Link, useParams, useSearchParams } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 import { mailService } from '../services/mail.service'
-import { defaultInfo } from '../services/default-emails'
 
 // icons
 import img from '/icon.svg'
@@ -28,9 +27,9 @@ export function SideBar({ emails }) {
   async function onInit() {
     const emails = await mailService.query()
     const details = emails?.reduce((a, b) => {
-      if (!b.isRead && b.to === defaultInfo.loggedinUser.email && !b.inTrash) a.unRead++
-      if (b.inTrash && b.to === defaultInfo.loggedinUser.email) a.inTrash++
-      if (b.isStarred && b.to === defaultInfo.loggedinUser.email) a.starred++
+      if (!b.isRead && !b.inTrash) a.unRead++
+      if (b.inTrash ) a.inTrash++
+      if (b.isStarred ) a.starred++
       return a
     }, { unRead: 0, inTrash: 0, starred: 0 })
     setDetails(details) // Update the state with the new details

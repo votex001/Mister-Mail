@@ -6,18 +6,10 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { useNavigate, useParams } from "react-router";
 import { mailService } from "../services/mail.service";
 
-
-
-
-
-
-
-
 export function Header({ searchByName, mail }) {
     if (searchByName) {
         const _handleKeyDown = (e) => {
             if (e.key === 'Enter') {
-                console.log("lol")
                 searchByName(e.target.value);
             }
         }
@@ -31,7 +23,7 @@ export function Header({ searchByName, mail }) {
         )
     }
 
-    if (mail) {
+    else if (mail) {
         const navigate = useNavigate();
         const params = useParams()
         const trashIcon = mail && mail.inTrash ? <MdRestoreFromTrash onClick={isTrash} /> : <IoMdTrash onClick={isTrash} />;
@@ -51,7 +43,7 @@ export function Header({ searchByName, mail }) {
             goBack()
         }
         function goBack() {
-            navigate(`/${params.mail}`, { replace: true })
+            navigate(`/${params.folder}`, { replace: true })
           }
         return (
             <div className="header">

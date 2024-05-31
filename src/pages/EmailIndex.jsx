@@ -1,30 +1,17 @@
 import { useEffect, useState } from "react"
 import { mailService } from "../services/mail.service"
-import { EmailPreview } from "../cmps/EmailPreview"
 import { Outlet, useNavigate, useParams } from "react-router"
 import { useSearchParams } from "react-router-dom"
-import { Compose } from "../cmps/Compose"
-import { CiSearch } from "react-icons/ci";
 import { SideBar } from "../cmps/SideBar"
 import { EmailList } from "../cmps/EmailList"
 import { Header } from "../cmps/Header"
 
-
-
-
-
-
 export function EmailIndex() {
     const [emails, setEmails] = useState(null)
     const [filter, setFilter] = useState(mailService.getDefaultFilter())
-    const [isRemovedAtTime, setIsRemovedAtTime] = useState(false)
     const navigate = useNavigate();
-    const [filterByName, setFilterByName] = useState('')
     const [searchParams] = useSearchParams()
-    const compose = searchParams.get("compose")
     const params = useParams()
-
-
 
     useEffect(() => {
         updateFilter()
@@ -32,21 +19,32 @@ export function EmailIndex() {
 
     useEffect(() => {
         loadEmails()
-    }, [filter, filterByName])
-
+    }, [filter])
 
     function searchByName(name) {
-        setFilterByName(name)
+        setFilter({
+            ...filter,
+            filterByName: name
+        })
     }
 
     async function isOnStarred(mail) {
-        const updatedMail = { ...mail, isStarred: !mail.isStarred }
+        const updatedMail = {
+            ...mail,
+            isStarred: !mail.isStarred
+        }
         await mailService.save(updatedMail)
         updateFilter()
     }
 
     async function sendToTrash(mail) {
-        const updatedMail = { ...mail, inTrash: !mail.inTrash, isStarred: false, removedAt: mail.inTrash ? null : new Date() }
+        const updatedMail = {
+            ...mail,
+            inTrash: !mail.inTrash,
+            isRead: true,
+            isStarred: false,
+            removedAt: mail.inTrash ? null : new Date()
+        }
         await mailService.save(updatedMail)
         updateFilter()
     }
@@ -57,37 +55,32 @@ export function EmailIndex() {
     }
 
     async function onRead(mail) {
-        const updatedMail = { ...mail, isRead: !mail.isRead }
+        const updatedMail = {
+            ...mail,
+            isRead: !mail.isRead
+        }
         await mailService.save(updatedMail)
         updateFilter()
     }
-    async function getNewNessage(newMessage) {
 
+    async function getNewNessage(newMessage) {
         await mailService.save(newMessage)
         updateFilter()
     }
 
-
-
     function updateFilter() {
-        const filter = {
-            all: { sended: 'any' },
-            unread: { isRead: false },
-            starred: { isStarred: true },
-            trash: { inTrash: true },
-            sent: { sended: true },
-        };
-
-        setIsRemovedAtTime(params.mail === 'trash');
-
-        if (!filter[params.mail]) {
+        if (!mailService.buildFilter(params.folder)) {
             return navigate('/all', { replace: true });
         }
 
-        setFilter({ ...mailService.getDefaultFilter(), ...filter[params.mail] });
+        setFilter({
+            ...mailService.getDefaultFilter(),
+            ...mailService.buildFilter(params.folder)
+        });
     }
+
     async function loadEmails() {
-        const data = await mailService.query(filter, filterByName)
+        const data = await mailService.query(filter)
         setEmails(data)
     }
 
@@ -96,11 +89,11 @@ export function EmailIndex() {
             <SideBar emails={emails} />
             {!params.mailId ?
                 (<ul className="email-list">
-                    {compose === "true" && <Compose getNewNessage={getNewNessage} />}
+                    {searchParams.get("compose") === "true" && <Compose getNewNessage={getNewNessage} />}
                     <Header searchByName={searchByName} />
                     <EmailList
                         emails={emails}
-                        isRemovedAtTime={isRemovedAtTime}
+                        isRemovedAtTime={params.folder === 'trash'}
                         isOnStarred={isOnStarred}
                         sendToTrash={sendToTrash}
                         onRemove={onRemove}
