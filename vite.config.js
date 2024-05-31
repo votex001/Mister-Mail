@@ -10,8 +10,8 @@ export default defineConfig({
   },
   server: {
     host: true,
-    open:"/#/mail"
+    open: '/#/mail',
   },
   base: './',
   publicPath: '/assets/', // Add this line to specify the public path for your assets
-});
+})
