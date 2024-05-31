@@ -1,9 +1,8 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { defaultInfo } from '../services/default-emails';
-import { mailService } from '../services/mail.service';
 
 export function Compose({ getNewNessage }) {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [_, setSearchParams] = useSearchParams();
 
     function onSubmit(e) {
         e.preventDefault();
