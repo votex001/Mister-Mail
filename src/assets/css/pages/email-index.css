@@ -1,0 +1,50 @@
+.email-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: calc(100vw - var(--sidebar-width));
+}
+
+.email-list .header {
+    padding-top: 20px;
+    padding-left: 20px;
+    height: var(--top-header-height);
+    border-bottom: 1px solid #ccc;
+}
+
+.email-list .header .custom-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 15px;
+    width: 300px;
+    padding: 0 10px;
+}
+
+.email-list .custom-search input {
+    margin: 3px 0;
+    padding: 4px;
+}
+
+.email-list .custom-search label svg {
+    font-size: 20px;
+}
+
+.email-list .custom-search input {
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+.email-list svg {
+    font-size: 30px;
+}
+
+.email-list svg.is-starred {
+    fill: yellow;
+}
+
+.email-list svg.side-icon {
+    font-size: 20px;
+}

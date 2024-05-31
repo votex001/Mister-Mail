@@ -1,0 +1,21 @@
+.email-details .header {
+    height: var(--top-header-height);
+    width: calc(100vw - 200px);
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+.email-details .header svg{
+    font-size: 23px;
+    margin-right: 5px;
+    cursor: pointer;
+    
+}
+
+
+.email-details .header svg:first-child{
+    margin: 0;
+    padding: 0;
+    margin-right: 40px;
+}

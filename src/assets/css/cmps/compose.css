@@ -1,0 +1,73 @@
+.compose-dialog {
+  bottom: 0;
+  margin-right: 0;
+  width: 500px;
+  height: 550px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px 0 0 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-bottom: none;
+  border-right: none;
+}
+
+.compose-dialog h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.compose-dialog h1 a {
+  color: #666;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.compose-dialog p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.compose-dialog label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.compose-dialog input[type="email"],
+.compose-dialog input[type="text"],
+.compose-dialog textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.compose-dialog textarea {
+  height: 200px;
+  resize: none;
+}
+
+.compose-dialog button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.compose-dialog button:hover {
+  background-color: #3e8e41;
+}
