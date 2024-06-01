@@ -33,13 +33,22 @@ export function EmailDetails() {
       <HeaderDetails mail={mail} />
       {mail && (
         <div className="details-main">
-          <ul>
-            <LetteredAvatar name={mail.from} />
-            <li className="email-subject">{mail.subject}</li>
-            <li className="email-from">From: {mail.from}</li>
-            <li className="email-to">To: {mail.to}</li>
-          </ul>
-          <p className="email-body">{mail.body}</p>
+          <div className="email-header">
+            <div className="avatar">
+              <LetteredAvatar name={mail.from} />
+            </div>
+            <div className="email-info">
+              <h2 className="email-subject">{mail.subject}</h2>
+              <p className="email-from">{mail.from}</p>
+              <p className="email-to">{mail.to}</p>
+              <p className="email-date">
+                {new Date(mail.sentAt).toLocaleDateString()}
+              </p>
+            </div>
+          </div>
+          <div className="email-body">
+            <p>{mail.body}</p>
+          </div>
         </div>
       )}
     </div>

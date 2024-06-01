@@ -5,6 +5,8 @@ import { TiDeleteOutline } from 'react-icons/ti'
 import { useNavigate, useParams } from 'react-router'
 import { mailService } from '../services/mail.service'
 import img from '/icon.svg'
+import { LetteredAvatar } from './LetteredAvatar'
+import { defaultInfo } from '../services/default-emails'
 
 
 export function HeaderDetails({ mail }) {
@@ -42,6 +44,9 @@ export function HeaderDetails({ mail }) {
         <IoMdTrash onClick={onToggleTrash} />
       )}
       {mail?.inTrash && <TiDeleteOutline onClick={onDeleteForever} />}
+      </div>
+      <div>
+      <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size='40px'/>
       </div>
     </div>
   )

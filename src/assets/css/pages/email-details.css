@@ -15,11 +15,11 @@
 
 
 .email-details .header {
- display: grid;
- grid-column: 1/-1;
- grid-template-columns: subgrid;
+  display: grid;
+  grid-column: 1/-1;
+  grid-template-columns: subgrid;
   padding-left: 10px;
-  align-content: center;
+  align-items: start;
   grid-area: h;
 }
 .email-details .header svg {
@@ -46,4 +46,45 @@
 .email-details .buttons{
   align-self: center;
   margin-left: 10px;
+}
+.email-details {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.email-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0 10px 20px;
+}
+
+.avatar {
+  margin-right: 10px;
+}
+
+.email-info {
+  flex: 1;
+}
+
+.email-subject {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.email-from, .email-to {
+  color: #666;
+  font-size: 14px;
+}
+
+.email-body {
+  padding:20px 0 0 20px;
+}
+
+.email-body p {
+  font-size: 16px;
+  line-height: 1.5;
 }

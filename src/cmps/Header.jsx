@@ -2,6 +2,8 @@ import { CiSearch } from 'react-icons/ci'
 import img from '/icon.svg'
 import { useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
+import { LetteredAvatar } from './LetteredAvatar'
+import { defaultInfo } from '../services/default-emails'
 
 export function Header({ onSearchByName }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -32,6 +34,9 @@ export function Header({ onSearchByName }) {
           value={value}
         />
       </label>
+      <div>
+      <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size='40px'/>
+      </div>
     </div>
   )
 }

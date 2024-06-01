@@ -12,7 +12,7 @@ export function LetteredAvatar ({ name,size="50px"}) {
     display: "flex",
     height:size,
     width:size,
-    borderRadius: "100px",
+    borderRadius: "calc(100px)",
     color: "white",
     background: color,
     margin: "auto"
