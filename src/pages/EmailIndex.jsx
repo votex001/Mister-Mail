@@ -5,13 +5,14 @@ import { useSearchParams } from 'react-router-dom'
 import { SideBar } from '../cmps/SideBar'
 import { EmailList } from '../cmps/EmailList'
 import { Header } from '../cmps/Header'
+import { Compose } from '../cmps/Compose'
 
 export function EmailIndex() {
   const [emails, setEmails] = useState(null)
   const [filter, setFilter] = useState(mailService.getDefaultFilter())
   const navigate = useNavigate()
   const params = useParams()
-  const [searchParams] = useSearchParams()
+  const [searchParams,setSearchParams] = useSearchParams()
 
   useEffect(() => {
     updateFilter()
@@ -60,6 +61,16 @@ export function EmailIndex() {
       ...filter,
       filterByName: name,
     })
+    if(name){
+
+      setSearchParams((prev) => {
+        prev.set('txt', name)
+        return prev
+      })
+    }else setSearchParams((prev)=>{
+      prev.delete("txt")
+      return prev
+    })
   }
 
   async function onGetNewNessage(newMessage) {
@@ -71,10 +82,10 @@ export function EmailIndex() {
     if (!mailService.buildFilter(params.folder)) {
       return navigate('/all', { replace: true })
     }
-
     setFilter({
       ...mailService.getDefaultFilter(),
       ...mailService.buildFilter(params.folder),
+      filterByName: searchParams.get("txt")
     })
   }
 

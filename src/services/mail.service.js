@@ -33,9 +33,13 @@ async function query(filterBy) {
         sent === 'any' ||
         (sent && email.from === defaultInfo.loggedinUser.email) ||
         (!sent && email.to === defaultInfo.loggedinUser.email)
-      const filterSearch = filterByName.toLowerCase().includes('me')
-        ? (filterByName = defaultInfo.loggedinUser.email)
-        : filterByName
+
+        let filterSearch = filterByName || ''; // Assign a default value or check if it has a value before using it
+        if (filterByName && filterByName.toLowerCase) {
+          filterSearch = filterByName.toLowerCase().includes('me')
+            ? (filterByName = defaultInfo.loggedinUser.email)
+            : filterByName;
+        }
       return (
         filterByStar &&
         filterByRead &&
