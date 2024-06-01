@@ -1,28 +1,27 @@
 .email {
   display: grid;
-  grid-template-columns: min-content max-content minmax(200px, auto) max-content repeat(
-      2,
-      min-content
-    );
+  grid-template-columns:
+    min-content 50px max-content minmax(200px, auto) max-content
+    repeat(2, min-content);
   padding: 10px;
   border-bottom: 1px solid #ddd;
   background-color: #f9f9f9;
 }
 .email .link {
   display: grid;
-  grid-column: 2 / span 3;
+  grid-column: 2 / span 4;
   grid-template-columns: subgrid;
   text-decoration: none;
-  align-content: center;
+  align-items: center;
 }
 .email.trash {
-  grid-template-columns: max-content minmax(200px, auto) max-content repeat(
+  grid-template-columns: 50px max-content  minmax(200px, auto) max-content repeat(
       3,
       min-content
     );
 }
 .email.trash .link {
-  grid-column: 1 / span 3;
+  grid-column: 1 / span 4;
 }
 
 .email .email-icon {

@@ -3,11 +3,12 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { mailService } from '../services/mail.service'
 import { HeaderDetails } from '../cmps/HeaderDetails'
 import { Compose } from '../cmps/Compose'
+import { LetteredAvatar } from '../cmps/LetteredAvatar'
 
 export function EmailDetails() {
   const [mail, setMail] = useState()
   const params = useParams()
-  const [searchParams,setSearchParams] =useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
     getMail()
@@ -16,7 +17,6 @@ export function EmailDetails() {
     await mailService.save(newMessage)
     updateFilter()
   }
-
 
   async function getMail() {
     const data = await mailService.getById(params.mailId)
@@ -28,12 +28,13 @@ export function EmailDetails() {
   return (
     <div className="email-details">
       {searchParams.get('compose') === 'true' && (
-            <Compose onGetNewNessage={onGetNewNessage} />
-          )}
+        <Compose onGetNewNessage={onGetNewNessage} />
+      )}
       <HeaderDetails mail={mail} />
       {mail && (
         <div className="details-main">
           <ul>
+            <LetteredAvatar name={mail.from} />
             <li className="email-subject">{mail.subject}</li>
             <li className="email-from">From: {mail.from}</li>
             <li className="email-to">To: {mail.to}</li>
