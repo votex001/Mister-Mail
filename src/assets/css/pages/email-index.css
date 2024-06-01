@@ -27,7 +27,7 @@
   display: grid;
   grid-column: 1/-1;
   grid-template-columns: subgrid;
-  align-items: center;
+  align-content: center;
 }
 .email-list .logo {
   justify-self: center;
