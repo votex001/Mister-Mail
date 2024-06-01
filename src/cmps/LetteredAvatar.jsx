@@ -3,7 +3,7 @@ import { utilService } from "../services/util.service";
 
 
 
-export function LetteredAvatar ({ name,size="100%"}) {
+export function LetteredAvatar ({ name,size="50px"}) {
 
 
   let initials = name.split(' ')[0][0].toUpperCase();
