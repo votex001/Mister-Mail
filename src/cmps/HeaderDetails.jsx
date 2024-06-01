@@ -4,6 +4,8 @@ import { MdRestoreFromTrash } from 'react-icons/md'
 import { TiDeleteOutline } from 'react-icons/ti'
 import { useNavigate, useParams } from 'react-router'
 import { mailService } from '../services/mail.service'
+import img from '/icon.svg'
+
 
 export function HeaderDetails({ mail }) {
   const navigate = useNavigate()
@@ -27,6 +29,11 @@ export function HeaderDetails({ mail }) {
   }
   return (
     <div className="header">
+       <section className="logo">
+        <img src={img} /> MisterMail
+      </section>
+      <div className='buttons'>
+
       <IoArrowBack onClick={goBack} />
       <IoMdMailUnread onClick={onSetUnread} />
       {mail?.inTrash ? (
@@ -35,6 +42,7 @@ export function HeaderDetails({ mail }) {
         <IoMdTrash onClick={onToggleTrash} />
       )}
       {mail?.inTrash && <TiDeleteOutline onClick={onDeleteForever} />}
+      </div>
     </div>
   )
 }

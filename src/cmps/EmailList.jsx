@@ -9,7 +9,7 @@ export function EmailList({
   onRead,
 }) {
   return (
-    <>
+    <div className='emails'>
       {emails && (
         <>
           {emails.map((email) => (
@@ -25,6 +25,6 @@ export function EmailList({
           ))}
         </>
       )}
-    </>
+    </div>
   )
 }

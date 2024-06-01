@@ -1,4 +1,5 @@
 import { CiSearch } from 'react-icons/ci'
+import img from '/icon.svg'
 
 export function Header({ onSearchByName, mail }) {
   const onHandleKeyDown = (e) => {
@@ -9,7 +10,11 @@ export function Header({ onSearchByName, mail }) {
 
   return (
     <div className="header">
+      <section className="logo">
+        <img src={img} /> MisterMail
+      </section>
       <label htmlFor="search-input" className="custom-search">
+      
         <label htmlFor="search-input">
           <CiSearch />
         </label>

@@ -1,15 +1,43 @@
+.email-index{
+  display: grid;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  grid-template: subgrid / subgrid;
+}
+
+
+
+
+
 .email-list {
   margin: 0;
   padding: 0;
   list-style: none;
   width: calc(100vw - var(--sidebar-width));
+  grid-area: b;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  grid-template: subgrid / subgrid;
 }
 
+
 .email-list .header {
-  padding-top: 20px;
-  padding-left: 20px;
-  height: var(--top-header-height);
-  border-bottom: 1px solid #ccc;
+  grid-area: h;
+  display: grid;
+  grid-column: 1/-1;
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+.email-list .logo {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+.email-list .logo img {
+  width: 40px;
 }
 
 .email-list .header .custom-search {
@@ -19,6 +47,7 @@
   border: 1px solid black;
   border-radius: 15px;
   width: 300px;
+  margin-left: 10px;
   padding: 0 10px;
 }
 
@@ -47,4 +76,11 @@
 
 .email-list svg.side-icon {
   font-size: 20px;
+}
+.email-list .emails{
+  grid-area: b;
+  overflow: hidden;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-radius: 10px 0 0 0;
 }

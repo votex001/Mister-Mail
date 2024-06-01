@@ -37,9 +37,7 @@ export function SideBar({ emails }) {
 
   return (
     <nav className={`side-bar `}>
-      <section className="logo">
-        <img src={img} /> MisterMail
-      </section>
+      
       <button className="compose" onClick={onComposeClick}>
         <GoPencil /> Compose
       </button>

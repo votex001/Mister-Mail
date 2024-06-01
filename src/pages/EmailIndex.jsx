@@ -84,7 +84,7 @@ export function EmailIndex() {
   }
 
   return (
-    <div className="email-index flex">
+    <div className="email-index">
       <SideBar emails={emails} />
       {!params.mailId ? (
         <ul className="email-list">

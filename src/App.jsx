@@ -11,7 +11,7 @@ export function App() {
   return (
     <Router>
       <section className="main-app">
-        <main className="flex">
+        <main className="main-layout">
           <Routes>
             <Route path="/" element={<EmailIndex />}></Route>
             <Route path="/:folder" element={<EmailIndex />}>
