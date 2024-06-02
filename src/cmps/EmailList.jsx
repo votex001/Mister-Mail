@@ -9,7 +9,7 @@ export function EmailList({
   onRead,
 }) {
   return (
-    <div className='emails'>
+    <div className="emails">
       {emails && (
         <>
           {emails.map((email) => (

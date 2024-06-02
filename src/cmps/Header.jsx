@@ -35,7 +35,7 @@ export function Header({ onSearchByName }) {
         />
       </label>
       <div>
-      <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size='40px'/>
+        <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size="40px" />
       </div>
     </div>
   )

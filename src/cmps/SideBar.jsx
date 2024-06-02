@@ -5,11 +5,15 @@ import { mailService } from '../services/mail.service'
 import { NavFolders } from './NavForders'
 
 // icons
-import img from '/icon.svg'
 import { GoPencil } from 'react-icons/go'
 
 export function SideBar({ emails }) {
-  const [details, setDetails] = useState({ unread: 0, basket: 0, starred: 0 })
+  const [details, setDetails] = useState({
+    unread: 0,
+    bascket: 0,
+    starred: 0,
+    draft: 0,
+  })
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
@@ -37,7 +41,6 @@ export function SideBar({ emails }) {
 
   return (
     <nav className={`side-bar `}>
-      
       <button className="compose" onClick={onComposeClick}>
         <GoPencil /> Compose
       </button>

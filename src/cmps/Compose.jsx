@@ -1,32 +1,90 @@
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { defaultInfo } from '../services/default-emails'
+import { useEffect, useRef, useState } from 'react'
+import { mailService } from '../services/mail.service'
 
 export function Compose({ onGetNewNessage }) {
-  const [_, setSearchParams] = useSearchParams()
+  const [newMail, setNewMail] = useState({
+    ...mailService.getCleanMail(),
+    isRead: true,
+    from: defaultInfo.loggedinUser.email,
+  })
+  const params = useParams()
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const timeoutRef = useRef(null)
 
-  function onSubmit(e) {
-    e.preventDefault()
-    const newMessage = {
-      to: e.target[1].value,
-      subject: e.target[2].value,
-      body: e.target[3].value,
+  useEffect(() => {
+    checkIfMessageNew()
+  }, [])
+
+  useEffect(() => {
+    onMakeDraft()
+    return () => {
+      clearTimeout(timeoutRef.current)
     }
-    onGetNewNessage(newMessage)
-    onClose()
+  }, [newMail])
+
+  async function onSubmit(e) {
+    e.preventDefault()
+    await onGetNewNessage({ ...newMail, onDraft: false })
+    navigate(`/${params.folder}`, { replace: true })
   }
 
   function onClose() {
-    setSearchParams((prev) => {
-      prev.delete('compose')
-      return prev
-    })
+    const keys = ['to',"subject","body"]
+    if (keys.some((key) => newMail[key] !== '')) {
+        onGetNewNessage({ ...newMail, onDraft: true }).then(() =>
+        setSearchParams((prev) => {
+          prev.delete('compose')
+          return prev
+        })
+        )
+    }else{
+      setSearchParams((prev) => {
+        prev.delete('compose')
+        return prev
+      })
+    }
+    
+  }
+  function onChangeForm(e) {
+    const { id, value } = e.target
+    setNewMail((prev) => ({ ...prev, [id]: value }))
+  }
+
+ async function checkIfMessageNew() {
+  const compose = searchParams.get("compose")
+    if (compose&&compose!=="true"||newMail.id) {
+      mailService.getById(compose!=="true"?compose:newMail.id).then((value) => {
+        if (value !== null) {
+          setNewMail(value)
+        }
+      })
+      }
+    }
+  
+  async function onMakeDraft() {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    const keys = ['to',"subject","body"]
+    
+
+    if (keys.some((key) => newMail[key] !== '')) {
+      timeoutRef.current = setTimeout(() => {
+        onGetNewNessage({ ...newMail, onDraft: true }).then((res) =>
+          setNewMail({ ...res })
+        )
+      }, 3000)
+    }
   }
 
   return (
     <dialog open={true} className="compose-dialog">
       <form className="compose-form" onSubmit={onSubmit}>
         <h1>
-          New Message{' '}
+          New Mail
           <button type="button" onClick={onClose}>
             X
           </button>
@@ -34,23 +92,33 @@ export function Compose({ onGetNewNessage }) {
         <p>From: {`${defaultInfo.loggedinUser.email}`}</p>
         <span>
           <label htmlFor="to">To: </label>
-          <input type="email" id="to" required></input>
+          <input
+            value={newMail.to}
+            type="email"
+            id="to"
+            required
+            onChange={onChangeForm}
+          ></input>
         </span>
         <span>
           <label htmlFor="subject">Subject: </label>
           <input
+            value={newMail.subject}
             type="text"
             id="subject"
             required
             minLength="4"
             maxLength="18"
+            onChange={onChangeForm}
           ></input>
         </span>
         <textarea
-          id="text"
+          value={newMail.body}
+          id="body"
           placeholder="Your Message"
           required
           minLength="5"
+          onChange={onChangeForm}
         ></textarea>
         <button>Send</button>
       </form>

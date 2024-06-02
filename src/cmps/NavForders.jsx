@@ -1,5 +1,6 @@
 import { FaInbox, FaRegTrashAlt, FaStar } from 'react-icons/fa'
 import { IoMdMailUnread, IoMdSend } from 'react-icons/io'
+import { RiDraftLine } from 'react-icons/ri'
 import { NavLink } from 'react-router-dom'
 
 export function NavFolders({ details }) {
@@ -8,6 +9,7 @@ export function NavFolders({ details }) {
     sent: <IoMdSend />,
     unread: <IoMdMailUnread />,
     starred: <FaStar />,
+    draft: <RiDraftLine />,
     bascket: <FaRegTrashAlt />,
   }
   return (

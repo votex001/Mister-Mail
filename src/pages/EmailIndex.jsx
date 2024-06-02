@@ -73,9 +73,11 @@ export function EmailIndex() {
     })
   }
 
-  async function onGetNewNessage(newMessage) {
-    await mailService.save(newMessage)
-    updateFilter()
+ function onGetNewNessage(newMessage) {
+    return mailService.save(newMessage).then((res)=>{
+      updateFilter()
+      return res
+    })
   }
 
   function updateFilter() {

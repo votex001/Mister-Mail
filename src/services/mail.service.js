@@ -10,6 +10,7 @@ export const mailService = {
   getDefaultFilter,
   buildFilter,
   emailsCounter,
+  getCleanMail,
 }
 
 const STORAGE_KEY = 'emails'
@@ -24,26 +25,27 @@ async function query(filterBy) {
 
   // Filter emails by properties (starred, read, in trash)
   if (filterBy) {
-    var { isStarred, isRead, inTrash, sent, filterByName } = filterBy
+    var { isStarred, isRead, inTrash, sent, filterByName, onDraft } = filterBy
     emails = emails.filter((email) => {
       const filterByStar = isStarred === 'any' || email.isStarred === isStarred
       const filterByRead = isRead === 'any' || email.isRead === isRead
       const filterByInTrash = inTrash === email.inTrash
+      const filterByDraft = onDraft === email.onDraft
       const filterBysent =
         sent === 'any' ||
         (sent && email.from === defaultInfo.loggedinUser.email) ||
         (!sent && email.to === defaultInfo.loggedinUser.email)
-
-        let filterSearch = filterByName || ''; // Assign a default value or check if it has a value before using it
-        if (filterByName && filterByName.toLowerCase) {
-          filterSearch = filterByName.toLowerCase().includes('me')
-            ? (filterByName = defaultInfo.loggedinUser.email)
-            : filterByName;
-        }
+      let filterSearch = filterByName || '' // Assign a default value or check if it has a value before using it
+      if (filterByName && filterByName.toLowerCase) {
+        filterSearch = filterByName.toLowerCase().includes('me')
+          ? (filterByName = defaultInfo.loggedinUser.email)
+          : filterByName
+      }
       return (
         filterByStar &&
         filterByRead &&
         filterByInTrash &&
+        filterByDraft&&
         filterBysent &&
         (email.from.includes(filterSearch) ||
           email.subject.includes(filterSearch))
@@ -61,6 +63,22 @@ function getDefaultFilter() {
     inTrash: false,
     sent: 'any',
     filterByName: '',
+    onDraft: false
+  }
+}
+function getCleanMail(){
+  return{
+
+    subject: '',
+    body: '',
+    isRead: false,
+    isStarred: false,
+    inTrash: false,
+    onDraft: false,
+    sentAt: null,
+    removedAt: null,
+    from: '',
+    to:"",
   }
 }
 function buildFilter(folder) {
@@ -70,6 +88,7 @@ function buildFilter(folder) {
     starred: { isStarred: true, sent: 'any' },
     bascket: { inTrash: true },
     sent: { sent: true },
+    draft: { onDraft: true },
   }
   return filterMap[folder]
 }
@@ -80,9 +99,10 @@ async function emailsCounter() {
       if (!b.isRead && !b.inTrash) a.unread++
       if (b.inTrash) a.bascket++
       if (b.isStarred) a.starred++
+      if (b.onDraft) a.draft++
       return a
     },
-    { unread: 0, bascket: 0, starred: 0 }
+    { unread: 0, bascket: 0, starred: 0, draft: 0 }
   )
 }
 
@@ -98,22 +118,22 @@ function remove(id) {
 
 // Save an email (update or create)
 function save(mail) {
+  
   if (mail.id) {
-    // Update existing email
-    return storageService.put(STORAGE_KEY, mail)
+    return query().then((entities) => {
+      const entity = entities.find((entity) => entity.id === mail.id)
+     
+      if (!entity) {
+        return storageService.post(STORAGE_KEY, {
+          ...mail,
+          sentAt: Date.now(),
+        })
+      } else {
+        return storageService.put(STORAGE_KEY, mail)
+      }
+    })
   } else {
-    const newMail = {
-      subject: mail.subject,
-      body: mail.body,
-      isRead: true,
-      isStarred: false,
-      inTrash: false,
-      sentAt: Date.now(),
-      removedAt: null,
-      from: defaultInfo.loggedinUser.email,
-      to: mail.to,
-    }
-    return storageService.post(STORAGE_KEY, newMail)
+    return storageService.post(STORAGE_KEY, { ...mail, sentAt: Date.now() })
   }
 }
 

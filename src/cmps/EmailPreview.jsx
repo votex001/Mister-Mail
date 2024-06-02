@@ -45,7 +45,7 @@ export function EmailPreview({
         </button>
       )}
       <Link className="link" to={`${email.id}`}>
-        <LetteredAvatar name={email.from} size='30px' />
+        <LetteredAvatar name={email.from} size="30px" />
         <h3 className="name">{slicedName(email.from)}</h3>
         <p className="subject">{email.subject}</p>
         <p className="date">{date}</p>

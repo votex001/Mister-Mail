@@ -13,9 +13,11 @@ export function EmailDetails() {
   useEffect(() => {
     getMail()
   }, [params.mailId])
-  async function onGetNewNessage(newMessage) {
-    await mailService.save(newMessage)
-    updateFilter()
+function onGetNewNessage(newMessage) {
+    return mailService.save(newMessage).then((res)=>{
+      getMail()
+      return res
+    })
   }
 
   async function getMail() {
@@ -27,7 +29,7 @@ export function EmailDetails() {
 
   return (
     <div className="email-details">
-      {searchParams.get('compose') === 'true' && (
+      {searchParams.get('compose') && (
         <Compose onGetNewNessage={onGetNewNessage} />
       )}
       <HeaderDetails mail={mail} />
