@@ -1,14 +1,15 @@
 .email {
   display: grid;
   grid-template-columns:
-  min-content max-content minmax(200px, auto) max-content
-  repeat(2, min-content);
+    min-content max-content minmax(200px, auto) max-content
+    repeat(2, min-content);
   padding: 10px 0 9px 0;
   position: relative;
   background-color: #f9f9f9;
 }
-.email:hover{
-  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+.email:hover {
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
   z-index: 2;
 }
 .email .link {
@@ -22,26 +23,26 @@
 }
 .email.trash {
   grid-template-columns: max-content minmax(200px, auto) max-content repeat(
-    3,
-    min-content
+      3,
+      min-content
     );
-  }
-  .email.trash .link {
-    grid-column: 1 / span 3;
-  }
-  
-  .email .email-icon {
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    color: #999;
-  }
-  .email .email-icon svg{
+}
+.email.trash .link {
+  grid-column: 1 / span 3;
+}
+
+.email .email-icon {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #999;
+}
+.email .email-icon svg {
   font-size: 20px;
 }
 .email .email-icon.star {
@@ -61,6 +62,9 @@
   font-size: 16px;
   min-width: 150px;
   color: #000;
+}
+.email.trash .name {
+  margin-left: 13px;
 }
 
 .email .subject {
