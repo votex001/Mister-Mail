@@ -13,24 +13,21 @@ export function NavFolders({ details }) {
     bascket: <FaRegTrashAlt />,
   }
   return (
-    <>
+    <div className='folders'>
       {Object.keys(folders).map((folderName) => {
         const folder = folderName.charAt(0).toUpperCase() + folderName.slice(1)
-        const number =
-          details[folderName] >= 0 && folderName != 'all'
-            ? details[folderName]
-            : ''
+        const number = details[folderName] >0 &&details[folderName]
         return (
           <div key={folderName}>
             <NavLink to={`/${folderName}`} className="flex nav">
-              <span>
+              <div>
                 {folders[folderName]} {folder}{' '}
-              </span>{' '}
+              </div>{' '}
               {number}
             </NavLink>
           </div>
         )
       })}
-    </>
+    </div>
   )
 }

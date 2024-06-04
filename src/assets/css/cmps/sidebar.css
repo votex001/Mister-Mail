@@ -2,16 +2,15 @@
   display: flex;
   flex-direction: column;
   transition: all 0.5s;
-  padding-right: 20px;
   position: relative;
   grid-area: a;
+  font-size: 14px;
 }
 
-
-.side-bar div {
+.side-bar .folders div {
   display: flex;
   align-items: center;
-  height: 50px;
+  height: 2rem;
   left: -1000px;
 }
 
@@ -19,43 +18,71 @@
   padding: 10px;
 }
 
-.side-bar .compose {
+.side-bar .compose-holder {
   display: flex;
-  background-color: white;
-  font-weight: 500;
-  font-size: 1.5rem;
-  text-decoration: none;
-  margin: 10px 5px;
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid;
-  border-radius: 30px;
+  height: 56px;
+  min-width: 96px;
+  border: none;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  padding-left: 8px;
+  margin: 8px 0 16px 0;
+}
+.side-bar .compose-holder .compose {
+  display: flex;
+  align-items: center;
+  background-color: rgb(194, 231, 255);
+  color: #001d35;
+  height: 56px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 32px;
+  border-radius: 16px;
+  padding-right: 24px;
+  cursor: pointer;
+}
+.side-bar .compose-holder .compose::before {
+  content: '';
+  background-image: url('https://www.gstatic.com/images/icons/material/system_gm/1x/create_black_24dp.png');
+  background-size: 24px;
+  background-position-x: 50%;
+  background-position-y: 50%;
+  background-repeat: no-repeat;
+  height: 20px;
+  min-width: 56px;
 }
 
-.side-bar .compose:hover {
-  box-shadow: 0 0px 8px 0px rgba(0, 0, 0, 0.2), 0 0px 15px 0 rgba(0, 0, 0, 0.19);
+.side-bar .compose-holder .compose:hover {
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3),
+    0 4px 8px 3px rgba(60, 64, 67, 0.15);
+  background-color: #c2e7ff;
 }
 
-.side-bar .active {
-  color: red;
-  background-color: var(--bg-color);
-  transition: all 0.5s;
-  border-radius: 0 20px 20px 0;
-}
 
-.side-bar div a {
+.side-bar .folders a {
   text-decoration: none;
 }
 
 .side-bar .nav {
   justify-content: space-between;
+  color:  rgb(32, 33, 36);
   align-items: center;
-  width: 100%;
+  padding: 0 12px 0 26px;
+  width: 240px;
+  height: 32px;
   gap: 5px;
+  border-radius: 0 16px 16px 0;
+}
+.side-bar .nav div{
+  height: 20px;
+  
+}
+.side-bar .nav svg{
+  font-size: 20px;
+  margin-right: 18px;
 }
 
-.side-bar .nav:not(span) {
-  padding-right: 20px;
+.side-bar .active {
+  background-color: var(--bg-color);
+  transition: all 0.5s;
 }

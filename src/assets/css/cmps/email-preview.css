@@ -1,42 +1,51 @@
 .email {
   display: grid;
   grid-template-columns:
-    min-content 50px max-content minmax(200px, auto) max-content
-    repeat(2, min-content);
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  min-content max-content minmax(200px, auto) max-content
+  repeat(2, min-content);
+  padding: 10px 0 9px 0;
+  position: relative;
   background-color: #f9f9f9;
+}
+.email:hover{
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+  z-index: 2;
 }
 .email .link {
   display: grid;
-  grid-column: 2 / span 4;
+  grid-column: 2 / span 3;
   grid-template-columns: subgrid;
   text-decoration: none;
   align-items: center;
+  align-self: center;
+  height: 20px;
 }
 .email.trash {
-  grid-template-columns: 50px max-content  minmax(200px, auto) max-content repeat(
-      3,
-      min-content
+  grid-template-columns: max-content minmax(200px, auto) max-content repeat(
+    3,
+    min-content
     );
-}
-.email.trash .link {
-  grid-column: 1 / span 4;
-}
-
-.email .email-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 18px;
-  color: #999;
+  }
+  .email.trash .link {
+    grid-column: 1 / span 3;
+  }
+  
+  .email .email-icon {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #999;
+  }
+  .email .email-icon svg{
+  font-size: 20px;
 }
 .email .email-icon.star {
-  margin-right: 10px;
+  padding: 0 10px 0 13px;
 }
 
 .email .email-icon:hover {
@@ -49,16 +58,14 @@
 
 .email .name {
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   min-width: 150px;
-  line-height: 1.5;
   color: #000;
 }
 
 .email .subject {
   margin: 0;
   font-size: 14px;
-  line-height: 1.5;
   color: #333;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -69,11 +76,15 @@
 .email .date {
   margin-left: auto;
   font-size: 12px;
-  line-height: 1.5;
   color: #666;
   text-decoration: none;
 }
 
-.email.read {
-  background-color: var(--bg-color);
+.email a > *:not(div) {
+  line-height: 20px;
+  font-weight: 600;
+}
+.email.read a > *:not(div) {
+  font-weight: 400;
+  font-size: 14px;
 }

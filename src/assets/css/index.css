@@ -14,7 +14,7 @@
 @import './cmps/compose.css';
 
 :root {
-  --bg-color: #c9daff;
+  --bg-color: rgb(211, 227, 253);
   --top-header-height: 75px;
   --sidebar-width: 220px;
 }

@@ -41,9 +41,11 @@ export function SideBar({ emails }) {
 
   return (
     <nav className={`side-bar `}>
-      <button className="compose" onClick={onComposeClick}>
-        <GoPencil /> Compose
-      </button>
+      <div className="compose-holder">
+        <div className="compose" onClick={onComposeClick}>
+          Compose
+        </div>
+      </div>
       <NavFolders details={details} />
     </nav>
   )

@@ -80,7 +80,4 @@
 .email-list .emails{
   grid-area: b;
   overflow: hidden;
-  border-top: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-  border-radius: 10px 0 0 0;
 }
