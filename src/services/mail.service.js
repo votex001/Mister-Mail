@@ -68,7 +68,6 @@ function getDefaultFilter() {
 }
 function getCleanMail(){
   return{
-
     subject: '',
     body: '',
     isRead: false,

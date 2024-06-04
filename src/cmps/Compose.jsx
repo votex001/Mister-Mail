@@ -67,6 +67,7 @@ export function Compose({ onGetNewNessage }) {
   async function onMakeDraft() {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
     }
     const keys = ['to',"subject","body"]
     
