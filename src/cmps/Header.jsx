@@ -22,20 +22,24 @@ export function Header({ onSearchByName }) {
       <section className="logo">
         <img src={img} /> MisterMail
       </section>
+      <div className='flex'>
+
       <label htmlFor="search-input" className="custom-search">
-        <label htmlFor="search-input">
+        <label className='search-logo' htmlFor="search-input">
           <CiSearch />
         </label>
         <input
           type="search"
           id="search-input"
+          placeholder='Search inbox'
           onChange={onChange}
           onKeyDown={onHandleKeyDown}
           value={value}
         />
       </label>
-      <div>
-        <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size="40px" />
+      </div>
+      <div className='profile-menu'>
+        <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size="40px" className="profile-img"/>
       </div>
     </div>
   )
