@@ -1,4 +1,5 @@
 .compose-dialog {
+  position: fixed;
   bottom: 0;
   margin-right: 0;
   width: 500px;
