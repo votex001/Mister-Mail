@@ -12,7 +12,7 @@ export function EmailIndex() {
   const [filter, setFilter] = useState(mailService.getDefaultFilter())
   const navigate = useNavigate()
   const params = useParams()
-  const [searchParams,setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
     updateFilter()
@@ -61,20 +61,20 @@ export function EmailIndex() {
       ...filter,
       filterByName: name,
     })
-    if(name){
-
+    if (name) {
       setSearchParams((prev) => {
         prev.set('txt', name)
         return prev
       })
-    }else setSearchParams((prev)=>{
-      prev.delete("txt")
-      return prev
-    })
+    } else
+      setSearchParams((prev) => {
+        prev.delete('txt')
+        return prev
+      })
   }
 
- function onGetNewNessage(newMessage) {
-    return mailService.save(newMessage).then((res)=>{
+  function onGetNewNessage(newMessage) {
+    return mailService.save(newMessage).then((res) => {
       updateFilter()
       return res
     })
@@ -87,7 +87,7 @@ export function EmailIndex() {
     setFilter({
       ...mailService.getDefaultFilter(),
       ...mailService.buildFilter(params.folder),
-      filterByName: searchParams.get("txt")
+      filterByName: searchParams.get('txt'),
     })
   }
 
@@ -101,7 +101,7 @@ export function EmailIndex() {
       <SideBar emails={emails} />
       {!params.mailId ? (
         <ul className="email-list">
-          {searchParams.get('compose') === 'true' && (
+          {searchParams.get('compose') && (
             <Compose onGetNewNessage={onGetNewNessage} />
           )}
           <Header onSearchByName={onSearchByName} />

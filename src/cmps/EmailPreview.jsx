@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { TiDeleteOutline } from 'react-icons/ti'
 import {
   IoIosStar,
@@ -9,7 +9,6 @@ import {
 } from 'react-icons/io'
 import { MdRestoreFromTrash } from 'react-icons/md'
 import { defaultInfo } from '../services/default-emails'
-import { LetteredAvatar } from './LetteredAvatar'
 
 export function EmailPreview({
   email,
@@ -19,6 +18,7 @@ export function EmailPreview({
   onRead,
   isRemovedAtTime,
 }) {
+  const [searchParams, setSearchParams] = useSearchParams()
   const removedAtTime = isRemovedAtTime
     ? new Date(email.removedAt).toJSON()
     : new Date(email.sentAt).toJSON()
@@ -29,11 +29,19 @@ export function EmailPreview({
     const capitalName = name.charAt(0).toUpperCase() + name.slice(1)
     return capitalName.split('@')[0]
   }
+  function onEdit() {
+    if (!email.onDraft) return
+    setSearchParams((prev) => {
+      prev.set('compose', email.id)
+      return prev
+    })
+  }
   return (
     <section
       className={`email ${email.isRead ? 'read' : ''} ${
         email.inTrash ? 'trash' : ''
       }`}
+      onClick={onEdit}
     >
       {!email.inTrash && (
         <button className="email-icon star" onClick={() => onToggleStar(email)}>
@@ -44,8 +52,10 @@ export function EmailPreview({
           )}
         </button>
       )}
-      <Link className="link" to={`${email.id}`}>
-        <h3 className="name">{slicedName(email.from)}</h3>
+      <Link className="link" to={`${email.onDraft ? '' : email.id}`}>
+        <h3 className="name">
+          {email.onDraft ? 'Draft' : slicedName(email.from)}
+        </h3>
         <p className="subject">{email.subject}</p>
         <p className="date">{date}</p>
       </Link>

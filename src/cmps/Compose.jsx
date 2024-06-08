@@ -16,7 +16,7 @@ export function Compose({ onGetNewNessage }) {
 
   useEffect(() => {
     checkIfMessageNew()
-  }, [])
+  }, [searchParams])
 
   useEffect(() => {
     onMakeDraft()
@@ -32,45 +32,45 @@ export function Compose({ onGetNewNessage }) {
   }
 
   function onClose() {
-    const keys = ['to',"subject","body"]
+    const keys = ['to', 'subject', 'body']
     if (keys.some((key) => newMail[key] !== '')) {
-        onGetNewNessage({ ...newMail, onDraft: true }).then(() =>
+      onGetNewNessage({ ...newMail, onDraft: true }).then(() =>
         setSearchParams((prev) => {
           prev.delete('compose')
           return prev
         })
-        )
-    }else{
+      )
+    } else {
       setSearchParams((prev) => {
         prev.delete('compose')
         return prev
       })
     }
-    
   }
   function onChangeForm(e) {
     const { id, value } = e.target
     setNewMail((prev) => ({ ...prev, [id]: value }))
   }
 
- async function checkIfMessageNew() {
-  const compose = searchParams.get("compose")
-    if (compose&&compose!=="true"||newMail.id) {
-      mailService.getById(compose!=="true"?compose:newMail.id).then((value) => {
-        if (value !== null) {
-          setNewMail(value)
-        }
-      })
-      }
+  async function checkIfMessageNew() {
+    const compose = searchParams.get('compose')
+    if ((compose && compose !== 'true') || newMail.id) {
+      mailService
+        .getById(compose !== 'true' ? compose : newMail.id)
+        .then((value) => {
+          if (value !== null) {
+            setNewMail(value)
+          }
+        })
     }
-  
+  }
+
   async function onMakeDraft() {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
       timeoutRef.current = null
     }
-    const keys = ['to',"subject","body"]
-    
+    const keys = ['to', 'subject', 'body']
 
     if (keys.some((key) => newMail[key] !== '')) {
       timeoutRef.current = setTimeout(() => {
