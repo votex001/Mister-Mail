@@ -63,7 +63,7 @@ function getDefaultFilter() {
     inTrash: false,
     sent: 'any',
     filterByName: '',
-    onDraft: "any"
+    onDraft: false
   }
 }
 function getCleanMail(){
@@ -85,7 +85,7 @@ function buildFilter(folder) {
     all: { sent: 'any' },
     unread: { isRead: false },
     starred: { isStarred: true, sent: 'any' },
-    bascket: { inTrash: true },
+    bascket: { inTrash: true,onDraft:"any" },
     sent: { sent: true },
     draft: { onDraft: true },
   }
