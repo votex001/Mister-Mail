@@ -1,0 +1,33 @@
+.user-msg {
+  position: relative;
+  user-select: none;
+  bottom: 10px;
+  left: 10px;
+  padding: 20px 30px;
+  margin-right: auto;
+  border-radius: 10px;
+}
+.user-msg.success {
+  background-color: rgba(0, 128, 0, 0.3);
+  animation: appear 1s;
+}
+.user-msg.error {
+  background-color: rgba(255, 0, 0, 0.3);
+  animation: appear 1s;
+}
+.user-msg .close-user-message {
+  position: absolute;
+ cursor: pointer;
+  top: 5px;
+  right: 10px;
+}
+
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

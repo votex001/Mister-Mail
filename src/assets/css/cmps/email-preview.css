@@ -63,6 +63,9 @@
   min-width: 150px;
   color: #000;
 }
+.email .name.draft{
+  color: red;
+}
 .email.trash .name {
   margin-left: 13px;
 }

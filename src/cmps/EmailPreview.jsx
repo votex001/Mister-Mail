@@ -53,13 +53,13 @@ export function EmailPreview({
         </button>
       )}
       <Link className="link" to={`${email.onDraft ? '' : email.id}`}>
-        <h3 className="name">
+        <h3 className={`name ${email.onDraft?"draft":""}`}>
           {email.onDraft ? 'Draft' : slicedName(email.from)}
         </h3>
         <p className="subject">{email.subject}</p>
         <p className="date">{date}</p>
       </Link>
-      <button className="email-icon trash" onClick={() => onSendToTrash(email)}>
+      <button className="email-icon trash" onClick={(e) =>{ e.stopPropagation();onSendToTrash(email)}}>
         {email.inTrash ? (
           <MdRestoreFromTrash className="side-icon" />
         ) : (

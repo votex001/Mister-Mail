@@ -37,6 +37,7 @@ export function EmailIndex() {
       inTrash: !mail.inTrash,
       isRead: true,
       isStarred: false,
+      onDraft:false,
       removedAt: mail.inTrash ? null : new Date(),
     }
     await mailService.save(updatedMail)

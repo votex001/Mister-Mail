@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import { EmailIndex } from './pages/EmailIndex'
 import { EmailDetails } from './pages/EmailDetails'
+import { UserMsg } from './cmps/UserMsg'
 
 export function App() {
   return (
@@ -19,6 +20,7 @@ export function App() {
             </Route>
           </Routes>
         </main>
+        <UserMsg />
       </section>
     </Router>
   )

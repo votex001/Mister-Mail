@@ -2,6 +2,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { defaultInfo } from '../services/default-emails'
 import { useEffect, useRef, useState } from 'react'
 import { mailService } from '../services/mail.service'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export function Compose({ onGetNewNessage }) {
   const [newMail, setNewMail] = useState({
@@ -9,6 +10,7 @@ export function Compose({ onGetNewNessage }) {
     isRead: true,
     from: defaultInfo.loggedinUser.email,
   })
+  const [messageSaved, setMessageSaved] = useState(true)
   const params = useParams()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -27,19 +29,27 @@ export function Compose({ onGetNewNessage }) {
 
   async function onSubmit(e) {
     e.preventDefault()
-    await onGetNewNessage({ ...newMail, onDraft: false })
-    navigate(`/${params.folder}`, { replace: true })
+    try {
+      await onGetNewNessage({ ...newMail, onDraft: false })
+      navigate(`/${params.folder}`, { replace: true })
+      showSuccessMsg('Your Message submited')
+    } catch (error) {
+      showErrorMsg('Some problems with submit')
+      console.error(error)
+    }
   }
 
   function onClose() {
     const keys = ['to', 'subject', 'body']
-    if (keys.some((key) => newMail[key] !== '')) {
-      onGetNewNessage({ ...newMail, onDraft: true }).then(() =>
-        setSearchParams((prev) => {
-          prev.delete('compose')
-          return prev
-        })
-      )
+    if (keys.some((key) => newMail[key] !== '' && !messageSaved)) {
+      onGetNewNessage({ ...newMail, onDraft: true })
+        .then(() =>
+          setSearchParams((prev) => {
+            prev.delete('compose')
+            return prev
+          })
+        )
+        .then(showSuccessMsg('Your message saved in draft!'))
     } else {
       setSearchParams((prev) => {
         prev.delete('compose')
@@ -50,6 +60,7 @@ export function Compose({ onGetNewNessage }) {
   function onChangeForm(e) {
     const { id, value } = e.target
     setNewMail((prev) => ({ ...prev, [id]: value }))
+    setMessageSaved(false)
   }
 
   async function checkIfMessageNew() {
@@ -72,11 +83,17 @@ export function Compose({ onGetNewNessage }) {
     }
     const keys = ['to', 'subject', 'body']
 
-    if (keys.some((key) => newMail[key] !== '')) {
-      timeoutRef.current = setTimeout(() => {
-        onGetNewNessage({ ...newMail, onDraft: true }).then((res) =>
+    if (keys.some((key) => newMail[key] !== '' && !messageSaved)) {
+      timeoutRef.current = setTimeout(async () => {
+        try {
+          const res = await onGetNewNessage({ ...newMail, onDraft: true })
+          setMessageSaved(true)
           setNewMail({ ...res })
-        )
+          showSuccessMsg('Your message saved in draft!')
+        } catch (err) {
+          showErrorMsg('Some problems with saving to draft')
+          console.error(err)
+        }
       }, 3000)
     }
   }
