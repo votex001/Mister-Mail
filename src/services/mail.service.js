@@ -30,7 +30,7 @@ async function query(filterBy) {
       const filterByStar = isStarred === 'any' || email.isStarred === isStarred
       const filterByRead = isRead === 'any' || email.isRead === isRead
       const filterByInTrash = inTrash === email.inTrash
-      const filterByDraft = onDraft === "any" || onDraft === email.onDraft
+      const filterByDraft = onDraft === 'any' || onDraft === email.onDraft
       const filterBysent =
         sent === 'any' ||
         (sent && email.from === defaultInfo.loggedinUser.email) ||
@@ -45,7 +45,7 @@ async function query(filterBy) {
         filterByStar &&
         filterByRead &&
         filterByInTrash &&
-        filterByDraft&&
+        filterByDraft &&
         filterBysent &&
         (email.from.includes(filterSearch) ||
           email.subject.includes(filterSearch))
@@ -56,18 +56,8 @@ async function query(filterBy) {
   // Return filtered emails
   return emails.sort((a, b) => b.sentAt - a.sentAt)
 }
-function getDefaultFilter() {
+function getCleanMail() {
   return {
-    isRead: 'any',
-    isStarred: 'any',
-    inTrash: false,
-    sent: 'any',
-    filterByName: '',
-    onDraft: false
-  }
-}
-function getCleanMail(){
-  return{
     subject: '',
     body: '',
     isRead: false,
@@ -77,7 +67,17 @@ function getCleanMail(){
     sentAt: null,
     removedAt: null,
     from: '',
-    to:"",
+    to: '',
+  }
+}
+function getDefaultFilter() {
+  return {
+    isRead: 'any',
+    isStarred: 'any',
+    inTrash: false,
+    sent: 'any',
+    filterByName: '',
+    onDraft: false,
   }
 }
 function buildFilter(folder) {
@@ -85,7 +85,7 @@ function buildFilter(folder) {
     all: { sent: 'any' },
     unread: { isRead: false },
     starred: { isStarred: true, sent: 'any' },
-    bascket: { inTrash: true,onDraft:"any" },
+    bascket: { inTrash: true, onDraft: 'any' },
     sent: { sent: true },
     draft: { onDraft: true },
   }
@@ -117,11 +117,10 @@ function remove(id) {
 
 // Save an email (update or create)
 function save(mail) {
-  
   if (mail.id) {
     return query().then((entities) => {
       const entity = entities.find((entity) => entity.id === mail.id)
-     
+
       if (!entity) {
         return storageService.post(STORAGE_KEY, {
           ...mail,
