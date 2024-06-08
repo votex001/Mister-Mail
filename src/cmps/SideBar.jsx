@@ -7,7 +7,7 @@ import { NavFolders } from './NavForders'
 // icons
 import { GoPencil } from 'react-icons/go'
 
-export function SideBar({ emails }) {
+export function SideBar({ emails: mails }) {
   const [details, setDetails] = useState({
     unread: 0,
     bascket: 0,
@@ -18,7 +18,7 @@ export function SideBar({ emails }) {
 
   useEffect(() => {
     loadDetails()
-  }, [emails])
+  }, [mails])
 
   function onComposeClick() {
     if (!searchParams.get('compose')) {

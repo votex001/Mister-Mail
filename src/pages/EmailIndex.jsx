@@ -3,12 +3,12 @@ import { mailService } from '../services/mail.service'
 import { Outlet, useNavigate, useParams } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { SideBar } from '../cmps/SideBar'
-import { EmailList } from '../cmps/EmailList'
+import { MailList } from '../cmps/MailList'
 import { Header } from '../cmps/Header'
 import { Compose } from '../cmps/Compose'
 
 export function EmailIndex() {
-  const [emails, setEmails] = useState(null)
+  const [mails, setMails] = useState(null)
   const [filter, setFilter] = useState(mailService.getDefaultFilter())
   const navigate = useNavigate()
   const params = useParams()
@@ -37,7 +37,7 @@ export function EmailIndex() {
       inTrash: !mail.inTrash,
       isRead: true,
       isStarred: false,
-      onDraft:false,
+      onDraft: false,
       removedAt: mail.inTrash ? null : new Date(),
     }
     await mailService.save(updatedMail)
@@ -94,20 +94,20 @@ export function EmailIndex() {
 
   async function loadEmails() {
     const data = await mailService.query(filter)
-    setEmails(data)
+    setMails(data)
   }
 
   return (
     <div className="email-index">
-      <SideBar emails={emails} />
+      <SideBar mails={mails} />
       {!params.mailId ? (
         <ul className="email-list">
           {searchParams.get('compose') && (
             <Compose onGetNewNessage={onGetNewNessage} />
           )}
           <Header onSearchByName={onSearchByName} />
-          <EmailList
-            emails={emails}
+          <MailList
+            mails={mails}
             isRemovedAtTime={params.folder === 'bascket'}
             onToggleStar={onToggleStar}
             onSendToTrash={onSendToTrash}
