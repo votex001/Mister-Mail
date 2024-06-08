@@ -11,7 +11,7 @@ export const mailService = {
   buildFilter,
   emailsCounter,
   getCleanMail,
-  sortMails
+  sortMails,
 }
 
 const STORAGE_KEY = 'emails'
@@ -20,7 +20,7 @@ const STORAGE_KEY = 'emails'
 _createEmails()
 
 // Query emails based on filters
-async function query(filterBy,sortBy) {
+async function query(filterBy, sortBy) {
   // Retrieve emails from storage
   let emails = await storageService.query(STORAGE_KEY)
 
@@ -55,36 +55,47 @@ async function query(filterBy,sortBy) {
   }
 
   // Return filtered emails
-  if(!sortBy){
+  if (!sortBy) {
     return emails.sort((a, b) => b.sentAt - a.sentAt)
-  }else {
-    return sortMails(emails,sortBy)
+  } else {
+    return sortMails(emails, sortBy)
   }
 }
 function sortMails(mails, sortBy) {
-  switch (sortBy.by){
-    case "date":
-      mails.sort((mail1, mail2) => (mail2.sentAt - mail1.sentAt) * sortBy.dir)
+  switch (sortBy.by) {
+    case 'date':
+      mails.sort((mail1, mail2) => {
+        if (!mail1.removedAt && !mail2.removedAt) {
+          return (mail2.sentAt - mail1.sentAt) * sortBy.dir
+        } else {
+          return (mail2.removedAt - mail1.removedAt) * sortBy.dir
+        }
+      })
       break
     case 'starred':
-      mails.sort((mail1, mail2) => (mail2.isStarred - mail1.isStarred) * sortBy.dir);
-      break;
+      mails.sort(
+        (mail1, mail2) => (mail2.isStarred - mail1.isStarred) * sortBy.dir
+      )
+      break
     case 'read':
       mails.sort((mail1, mail2) => {
-        const readStatusComparison = (mail2.isRead - mail1.isRead) * sortBy.dir;
+        const readStatusComparison = (mail2.isRead - mail1.isRead) * sortBy.dir
         if (readStatusComparison !== 0) {
-          return readStatusComparison;
+          return readStatusComparison
         }
-        return mail2.sentAt - mail1.sentAt;
-      });
-      break;
+        return mail2.sentAt - mail1.sentAt
+      })
+      break
     case 'subject':
-      mails.sort((mail1, mail2) => mail1.subject.localeCompare(mail2.subject) * sortBy.dir);
-      break;
+      mails.sort(
+        (mail1, mail2) =>
+          mail1.subject.localeCompare(mail2.subject) * sortBy.dir
+      )
+      break
     default:
       // handle default case if sortBy.by is not one of the above
-      mails.sort((a, b) => b.sentAt - a.sentAt);
-      break;
+      mails.sort((a, b) => b.sentAt - a.sentAt)
+      break
   }
   return mails
 }

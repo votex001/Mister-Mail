@@ -22,11 +22,13 @@ export function SortMenu({ sortMails, sortBy }) {
   }
 function loadParams(){
     
-    if(params.folder === "unread"){
+    if(params.folder === "unread"||params.folder === "draft"){
        
         setSortParams(basicSort.filter(sort=>{return sort!="Read"}))
     }else if(params.folder === "starred"){
         setSortParams(basicSort.filter(sort=>{return sort!="Starred"}))
+    }else{
+        setSortParams(basicSort)
     }
 }
 
