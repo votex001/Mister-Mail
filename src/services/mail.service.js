@@ -30,7 +30,7 @@ async function query(filterBy) {
       const filterByStar = isStarred === 'any' || email.isStarred === isStarred
       const filterByRead = isRead === 'any' || email.isRead === isRead
       const filterByInTrash = inTrash === email.inTrash
-      const filterByDraft = onDraft === email.onDraft
+      const filterByDraft = onDraft === "any" || onDraft === email.onDraft
       const filterBysent =
         sent === 'any' ||
         (sent && email.from === defaultInfo.loggedinUser.email) ||
@@ -63,7 +63,7 @@ function getDefaultFilter() {
     inTrash: false,
     sent: 'any',
     filterByName: '',
-    onDraft: false
+    onDraft: "any"
   }
 }
 function getCleanMail(){
@@ -98,7 +98,7 @@ async function emailsCounter() {
       if (!b.isRead && !b.inTrash) a.unread++
       if (b.inTrash) a.bascket++
       if (b.isStarred) a.starred++
-      if (b.onDraft) a.draft++
+      if (b.onDraft && !b.inTrash) a.draft++
       return a
     },
     { unread: 0, bascket: 0, starred: 0, draft: 0 }

@@ -7,7 +7,7 @@ import { NavFolders } from './NavForders'
 // icons
 import { GoPencil } from 'react-icons/go'
 
-export function SideBar({ emails: mails }) {
+export function SideBar({mails }) {
   const [details, setDetails] = useState({
     unread: 0,
     bascket: 0,
