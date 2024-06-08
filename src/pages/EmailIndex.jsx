@@ -10,6 +10,7 @@ import { Compose } from '../cmps/Compose'
 export function EmailIndex() {
   const [mails, setMails] = useState(null)
   const [filter, setFilter] = useState(mailService.getDefaultFilter())
+  const [sortBy, setSortBy] = useState({ by: 'date', dir: 1 })
   const navigate = useNavigate()
   const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -20,7 +21,7 @@ export function EmailIndex() {
 
   useEffect(() => {
     loadEmails()
-  }, [filter])
+  }, [filter,sortBy])
 
   async function onToggleStar(mail) {
     const updatedMail = {
@@ -92,10 +93,13 @@ export function EmailIndex() {
   }
 
   async function loadEmails() {
-    const data = await mailService.query(filter)
+    const data = await mailService.query(filter,sortBy)
     setMails(data)
   }
-
+  // mails&& mailService.sortMails(mails,{by:"starred",dir:1})
+  function sortMails(sortBy) {
+    setSortBy(prev=>{return{...prev,...sortBy}})
+  }
   return (
     <div className="email-index">
       <SideBar mails={mails} />
@@ -107,6 +111,8 @@ export function EmailIndex() {
           <Header onSearchByName={onSearchByName} />
           <MailList
             mails={mails}
+            sortMails={sortMails}
+            sortBy={sortBy}
             isRemovedAtTime={params.folder === 'bascket'}
             onToggleStar={onToggleStar}
             onSendToTrash={onSendToTrash}

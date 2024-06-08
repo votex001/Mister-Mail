@@ -1,8 +1,10 @@
 import { MailPreview } from './MailPreview'
+import { SortMenu } from './SortMenu'
 
-export function MailList({ mails, ...otherFunctions }) {
+export function MailList({ mails,sortMails,sortBy, ...otherFunctions }) {
   return (
     <div className="emails">
+      <SortMenu sortMails={sortMails} sortBy={sortBy}/>
       {mails && (
         <>
           {mails.map((mail) => (
