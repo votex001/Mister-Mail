@@ -73,9 +73,14 @@ function sortMails(mails, sortBy) {
       })
       break
     case 'starred':
-      mails.sort(
-        (mail1, mail2) => (mail2.isStarred - mail1.isStarred) * sortBy.dir
-      )
+      mails.sort((mail1, mail2) => {
+        const readStatusComparison =
+          (mail2.isStarred - mail1.isStarred) * sortBy.dir
+        if (readStatusComparison !== 0) {
+          return readStatusComparison
+        }
+        return mail2.sentAt - mail1.sentAt
+      })
       break
     case 'read':
       mails.sort((mail1, mail2) => {
