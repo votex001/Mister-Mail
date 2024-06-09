@@ -14,6 +14,7 @@
 @import './cmps/compose.css';
 @import './cmps/user-msg.css';
 @import './cmps/sort-menu.css';
+@import './cmps/search-filter.css';
 
 :root {
   --bg-color: rgb(211, 227, 253);

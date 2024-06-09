@@ -58,10 +58,7 @@ export function EmailIndex() {
   }
 
   function onSearchByName(name) {
-    setFilter({
-      ...filter,
-      filterByName: name,
-    })
+    
     if (name) {
       setSearchParams((prev) => {
         prev.set('txt', name)

@@ -29,32 +29,43 @@
   height: 48px;
 }
 .email-list .logo {
+  user-select: none;
   justify-self: center;
   display: flex;
   align-items: center;
   font-size: 20px;
   font-weight: 700;
 }
-.email-list .logo img {
+.email-list .logo::before {
+  content: '';
+  user-select: none;
+  background-image: url('./icon.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 40px;
+  height: 40px;
 }
 
 .email-list .header .custom-search {
+  position: relative;
   background-color: rgb(234, 241, 251);
   max-width: 720px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 48px auto 64px;
   align-items: center;
   width: 100%;
   align-self: center;
   border-radius: 24px;
   height: 46px;
 }
+
 .email-list .header .custom-search .search-logo {
   width: auto;
   height: 48px;
   padding: 6px;
 }
-.email-list .header .custom-search .search-logo:hover svg {
+.email-list .header .custom-search .search-logo:hover svg,
+.email-list .header .custom-search .settings:hover img {
   background-color: rgba(60, 64, 67, 0.08);
   border-radius: 50%;
 }
@@ -64,12 +75,13 @@
   background: transparent;
 }
 
-.email-list .header  .custom-search label svg {
+.email-list .header .custom-search .search-logo svg {
   font-size: 36px;
   padding: 6px;
 }
 
-.email-list .header  .custom-search input {
+.email-list .header .custom-search input {
+  width: 100%;
   height: auto;
   border: none;
   font-size: 16px;
@@ -78,7 +90,12 @@
   outline: none;
   border: none;
 }
-.email-list .header .profile-menu{
+.email-list .header .custom-search .settings img {
+  cursor: pointer;
+  padding: 6px;
+  margin: 0 20px;
+}
+.email-list .header .profile-menu {
   padding: 0 4px 0 2px;
   align-content: center;
 }

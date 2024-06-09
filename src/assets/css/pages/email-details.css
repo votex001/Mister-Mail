@@ -21,6 +21,7 @@
   grid-column: 1/-1;
   grid-template-columns: subgrid;
   align-content: center;
+  padding: 12px 0;
 }
 .email-details .header svg {
   font-size: 23px;
@@ -33,16 +34,28 @@
   padding: 0;
   margin-right: 40px;
 }
-.email-details .logo {
+.email-details .header .logo {
+  user-select: none;
   justify-self: center;
   display: flex;
   align-items: center;
   font-size: 20px;
   font-weight: 700;
+  margin-left: 8px;
 }
-.email-details .logo img {
+.email-details .header .logo::before {
+  content: "";
+  user-select: none;
+  background-image: url("./icon.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 40px;
+  height: 40px;
 }
+.email-details .header .profile-img{
+  margin-right: 12px;
+}
+
 .email-details .buttons{
   align-self: center;
   margin-left: 10px;

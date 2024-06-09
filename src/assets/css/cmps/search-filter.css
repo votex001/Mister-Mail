@@ -1,0 +1,40 @@
+.email-list .header .custom-search:has(.search-filter) {
+  border-radius: 24px 24px 0 0;
+  background-color: #fff;
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  z-index: 4;
+}
+.email-list .header .custom-search .search-filter {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  background-color: #fff;
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+}
+.custom-search .search-filter header {
+  display: flex;
+  padding: 15px 10px;
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  gap: 5px;
+}
+.custom-search .search-filter header button {
+  background-color: #fff;
+  border: 1px solid black;
+  padding: 4px 6px;
+  border-radius: 8px;
+}
+.custom-search .search-filter header button.selected{
+border: none;
+background-color: var(--bg-color);
+font-weight: 600;
+color: rgb(4, 30, 73);
+}
+.custom-search .search-filter header button.selected::before{
+    content: "✓";
+    margin: 5px;
+}

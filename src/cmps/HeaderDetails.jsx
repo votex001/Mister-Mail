@@ -37,7 +37,7 @@ export function HeaderDetails({ mail }) {
   return (
     <div className="header">
       <section className="logo">
-        <img src={img} /> MisterMail
+       MisterMail
       </section>
       <div className="buttons">
         <IoArrowBack onClick={goBack} />
@@ -50,7 +50,7 @@ export function HeaderDetails({ mail }) {
         {mail?.inTrash && <TiDeleteOutline onClick={onDeleteForever} />}
       </div>
       <div>
-        <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size="40px" />
+        <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size="40px" className="profile-img"/>
       </div>
     </div>
   )
