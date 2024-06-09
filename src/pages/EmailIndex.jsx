@@ -96,7 +96,7 @@ export function EmailIndex() {
     const data = await mailService.query(filter,sortBy)
     setMails(data)
   }
-  // mails&& mailService.sortMails(mails,{by:"starred",dir:1})
+
   function sortMails(sortBy) {
     setSortBy(prev=>{return{...prev,...sortBy}})
   }
