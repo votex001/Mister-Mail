@@ -5,11 +5,11 @@ import { useParams, useSearchParams } from 'react-router-dom'
 
 export function SortMenu({ sortMails, sortBy }) {
   const params = useParams()
-  const basicSort = ['Starred','Read', 'Date',  'Subject']
- const [sortParams,setSortParams] = useState(basicSort)
- useEffect(()=>{
+  const basicSort = ['Date', 'Starred', 'Read', 'Subject']
+  const [sortParams, setSortParams] = useState(basicSort)
+  useEffect(() => {
     loadParams()
- },[params])
+  }, [params])
 
   function setSortMails(sortName) {
     if (sortBy.by === sortName.toLowerCase() && sortBy.dir === 1) {
@@ -20,35 +20,41 @@ export function SortMenu({ sortMails, sortBy }) {
       sortMails({ by: sortName.toLowerCase(), dir: 1 })
     }
   }
-function loadParams(){
-    
-    if(params.folder === "unread"||params.folder === "draft"){
-       
-        setSortParams(basicSort.filter(sort=>{return sort!="Read"}))
-    }else if(params.folder === "starred"){
-        setSortParams(basicSort.filter(sort=>{return sort!="Starred"}))
-    }else{
-        setSortParams(basicSort)
+  function loadParams() {
+    if (params.folder === 'unread' || params.folder === 'draft') {
+      setSortParams(
+        basicSort.filter((sort) => {
+          return sort != 'Read'
+        })
+      )
+    } else if (params.folder === 'starred') {
+      setSortParams(
+        basicSort.filter((sort) => {
+          return sort != 'Starred'
+        })
+      )
+    } else {
+      setSortParams(basicSort)
     }
-}
-
+  }
 
   return (
-    <section className="flex">
-      {sortParams.map((sort) => 
-         (
-            <button key={sort} onClick={() => setSortMails(sort)}>
-              {sort}
-              {sortBy.by === sort.toLowerCase() && sortBy.dir === 1 && (
-                <IoIosArrowDown />
-              )}
-              {sortBy.by === sort.toLowerCase() && sortBy.dir === -1 && (
-                <IoIosArrowUp />
-              )}
-            </button>
-          )
-       
-      )}
+    <section className="sort-menu">
+      {sortParams.map((sort) => (
+        <button
+          key={sort}
+          className={sortBy.by === sort.toLowerCase() ? 'selected' : ''}
+          onClick={() => setSortMails(sort)}
+        >
+          {sort}
+          {sortBy.by === sort.toLowerCase() && sortBy.dir === 1 && (
+            <IoIosArrowDown />
+          )}
+          {sortBy.by === sort.toLowerCase() && sortBy.dir === -1 && (
+            <IoIosArrowUp />
+          )}
+        </button>
+      ))}
     </section>
   )
 }

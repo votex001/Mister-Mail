@@ -1,0 +1,18 @@
+.sort-menu > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80px;
+  border: none;
+  background-color: white;
+}
+
+.sort-menu > button.selected {
+  border-bottom: 3px solid #0b57d0;
+  color: #0b57d0;
+}
+
+.sort-menu > button > svg {
+  font-size: 15px;
+  margin: 0 0 0 5px;
+}
