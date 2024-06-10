@@ -82,6 +82,7 @@ export function Header({ onSearchByName, mails }) {
         <input
           type="search"
           id="search-input"
+          autoComplete='off'
           placeholder="Search inbox"
           onChange={onChange}
           onKeyDown={onHandleKeyDown}
