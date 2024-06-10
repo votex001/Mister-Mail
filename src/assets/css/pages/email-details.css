@@ -1,19 +1,16 @@
-
-.email-details{
+.email-details {
   display: grid;
   grid-row: 1/-1;
   grid-column: 1/-1;
-  grid-template: subgrid /subgrid;
+  grid-template: subgrid / subgrid;
   padding: 0;
 }
-.details-main{
+.details-main {
   grid-area: b;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-radius: 10px 0 0 0;
 }
-
-
 
 .email-details .header {
   grid-area: h;
@@ -44,24 +41,24 @@
   margin-left: 8px;
 }
 .email-details .header .logo::before {
-  content: "";
+  content: '';
   user-select: none;
-  background-image: url("./icon.svg");
+  background-image: url('./icon.svg');
   background-size: cover;
   background-repeat: no-repeat;
   width: 40px;
   height: 40px;
 }
-.email-details .header .profile-img{
+.email-details .header .profile-img {
   margin-right: 12px;
 }
 
-.email-details .buttons{
+.email-details .buttons {
   align-self: center;
   margin-left: 10px;
 }
 
-.email-header {
+.details-main .email-header {
   display: flex;
   align-items: center;
   padding-bottom: 10px;
@@ -69,29 +66,30 @@
   padding: 20px 0 10px 20px;
 }
 
-.avatar {
+.details-main .email-header .avatar {
   margin-right: 10px;
 }
 
-.email-info {
+.details-main .email-header .email-info {
   flex: 1;
 }
 
-.email-subject {
+.details-main .email-header .email-info .email-subject {
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.email-from, .email-to {
+.details-main .email-header .email-info .email-from,
+.details-main .email-header .email-info .email-to {
   color: #666;
   font-size: 14px;
 }
 
-.email-body {
-  padding:20px 0 0 20px;
+.details-main .email-body {
+  padding: 20px 0 0 20px;
 }
 
-.email-body p {
+.details-main .email-body p {
   font-size: 16px;
   line-height: 1.5;
 }

@@ -1,0 +1,31 @@
+.search-preview .profile-result {
+  display: flex;
+  user-select: none;
+  cursor: pointer;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px;
+  border-top: 1px solid #666;
+  position: relative;
+}
+.search-preview .profile-result:hover::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 55px;
+  border-left: 3px solid #0b57d0;
+}
+.search-preview .profile-result .search-avatar {
+  margin-right: 10px;
+}
+.search-preview .profile-result .profile-name{
+    font-weight: 500;
+}
+.search-preview .profile-result .profile-mail{
+    color: #666;
+}
+.search-preview .profile-result:hover .profile-name,
+.search-preview .profile-result:hover .profile-mail{
+    text-shadow: 0.1px 0.1px 0.1px #666;
+}

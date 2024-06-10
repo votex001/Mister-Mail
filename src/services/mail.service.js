@@ -12,6 +12,7 @@ export const mailService = {
   emailsCounter,
   getCleanMail,
   sortMails,
+  searchFounder,
 }
 
 const STORAGE_KEY = 'emails'
@@ -36,8 +37,8 @@ async function query(filterBy, sortBy) {
         sent === 'any' ||
         (sent && email.from === defaultInfo.loggedinUser.email) ||
         (!sent && email.to === defaultInfo.loggedinUser.email)
-      let filterSearch = filterByName || '' // Assign a default value or check if it has a value before using it
-      if (filterByName && filterByName.toLowerCase) {
+      let filterSearch = filterByName?.toLowerCase() || '' // Assign a default value or check if it has a value before using it
+      if (filterByName && filterByName.length) {
         filterSearch = filterByName.toLowerCase().includes('me')
           ? (filterByName = defaultInfo.loggedinUser.email)
           : filterByName
@@ -48,8 +49,9 @@ async function query(filterBy, sortBy) {
         filterByInTrash &&
         filterByDraft &&
         filterBysent &&
-        (email.from.includes(filterSearch) ||
-          email.subject.includes(filterSearch))
+        (email.from.toLowerCase().includes(filterSearch) ||
+          email.subject.toLowerCase().includes(filterSearch) ||
+          email.body.toLowerCase().includes(filterSearch))
       )
     })
   }
@@ -61,6 +63,38 @@ async function query(filterBy, sortBy) {
     return sortMails(emails, sortBy)
   }
 }
+
+function searchFounder(mails, searchValue, sliceUser = 0, sliceMails = 0) {
+  const escapedSearchValue = searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const userRegExp = new RegExp(`\\b${escapedSearchValue}`, 'i')
+  const regExp = new RegExp(escapedSearchValue, 'i')
+  const result = {
+    user: mails.filter((mail) => {
+      const isFromMatch = userRegExp.test(mail.from)
+      const isFullNameMatch = userRegExp.test(mail.fullName)
+      const isNotLoggedInUser =
+        mail.from !== defaultInfo.loggedinUser.email &&
+        mail.fullName !== defaultInfo.loggedinUser.fullName
+      return (isFromMatch || isFullNameMatch) && isNotLoggedInUser
+    }),
+    mails: mails.filter((mail) => {
+      const isSubjectMatch = regExp.test(mail.subject)
+      const isBodyMatch = regExp.test(mail.body)
+      const isFromMatch = regExp.test(mail.from)
+      return isSubjectMatch || isBodyMatch || isFromMatch
+    }),
+  }
+
+  if (sliceUser > 0) {
+    result.user = result.user.slice(0, sliceUser)
+  }
+  if (sliceMails > 0) {
+    result.mails = result.mails.slice(0, sliceMails)
+  }
+
+  return result
+}
+
 function sortMails(mails, sortBy) {
   switch (sortBy.by) {
     case 'date':
@@ -116,6 +150,7 @@ function getCleanMail() {
     sentAt: null,
     removedAt: null,
     from: '',
+    fullName: '',
     to: '',
   }
 }

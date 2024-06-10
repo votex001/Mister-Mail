@@ -1,16 +1,21 @@
 import { CiSearch } from 'react-icons/ci'
 import img from '/settings.svg'
 import { useSearchParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { LetteredAvatar } from './LetteredAvatar'
 import { defaultInfo } from '../services/default-emails'
 import { SearchFilter } from './SearchFilter'
 
-export function Header({ onSearchByName }) {
+export function Header({ onSearchByName, mails }) {
   const [searchParams] = useSearchParams()
   const [searchValue, setSearchValue] = useState(searchParams.get('txt') || '')
   const [isSettingOpen, setIsSettingOpen] = useState(false)
-  const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(true)
+  const mainSectionRef = useRef(null)
+  const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false)
+
+  useEffect(() => {
+    setSearchValue(searchParams.get('txt') || '')
+  }, [searchParams.get('txt')])
 
   const onChange = (e) => {
     setSearchValue(e.target.value)
@@ -29,14 +34,21 @@ export function Header({ onSearchByName }) {
     if (searchValue) {
       onSearchByName(searchValue)
     }
+    onCloseSettings()
+    onCloseSearchFilter()
   }
-
-  function onClose(e) {
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      onCloseSettings()
-      onCloseSearchFilter()
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!mainSectionRef.current.contains(event.target)) {
+        onCloseSettings()
+        onCloseSearchFilter()
+      }
     }
-  }
+    document.addEventListener('click', handleClickOutside)
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [mainSectionRef])
 
   function onCloseSettings() {
     setIsSettingOpen(false)
@@ -61,7 +73,7 @@ export function Header({ onSearchByName }) {
       <section className="logo">MisterMail</section>
       <section
         className="custom-search"
-        // onBlur={onClose}
+        ref={mainSectionRef}
         onFocus={onOpenSearchFilter}
       >
         <span className="search-logo" onClick={onSearch}>
@@ -78,7 +90,9 @@ export function Header({ onSearchByName }) {
         <span className="settings" onClick={onOpenSettings}>
           <img src={img} />
         </span>
-        {isSearchFilterOpen && <SearchFilter />}
+        {isSearchFilterOpen && (
+          <SearchFilter searchValue={searchValue} mails={mails} />
+        )}
       </section>
 
       <div className="profile-menu">

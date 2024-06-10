@@ -8,6 +8,7 @@ export function Compose({ onGetNewNessage }) {
   const [newMail, setNewMail] = useState({
     ...mailService.getCleanMail(),
     isRead: true,
+    fullName: defaultInfo.loggedinUser.fullName,
     from: defaultInfo.loggedinUser.email,
   })
   const [messageSaved, setMessageSaved] = useState(true)

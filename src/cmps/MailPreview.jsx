@@ -24,10 +24,10 @@ export function MailPreview({
     : new Date(mail.sentAt).toJSON()
   const date = new Date(removedAtTime).toLocaleDateString()
 
-  function slicedName(name) {
-    if (name === defaultInfo.loggedinUser.email) return 'Me'
-    const capitalName = name.charAt(0).toUpperCase() + name.slice(1)
-    return capitalName.split('@')[0]
+  function convertedName(name) {
+    if (name === defaultInfo.loggedinUser.fullName) return 'Me'
+    return name
+    
   }
   function onEdit() {
     if (!mail.onDraft) return
@@ -54,7 +54,7 @@ export function MailPreview({
       )}
       <Link className="link" to={`${mail.onDraft ? '' : mail.id}`}>
         <h3 className={`name ${mail.onDraft ? 'draft' : ''}`}>
-          {mail.onDraft ? 'Draft' : slicedName(mail.from)}
+          {mail.onDraft ? 'Draft' : convertedName(mail.fullName)}
         </h3>
         <p className="subject">{mail.subject}</p>
         <p className="date">{date}</p>

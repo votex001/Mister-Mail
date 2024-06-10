@@ -105,7 +105,7 @@ export function EmailIndex() {
           {searchParams.get('compose') && (
             <Compose onGetNewNessage={onGetNewNessage} />
           )}
-          <Header onSearchByName={onSearchByName} />
+          <Header onSearchByName={onSearchByName} mails={mails}/>
           <MailList
             mails={mails}
             sortMails={sortMails}

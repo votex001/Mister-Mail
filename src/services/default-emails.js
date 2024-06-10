@@ -17,6 +17,7 @@ const emails = [
     sentAt: 1551133930594,
     removedAt: null,
     from: 'momo@momo.com',
+    fullName: "Momo Williams",
     to: loggedinUser.email,
   },
   {
@@ -30,6 +31,7 @@ const emails = [
     sentAt: 1243468800000,
     removedAt: null,
     from: 'mark.sweeney@comcast.net',
+    fullName: "Mark Grant",
     to: loggedinUser.email,
   },
   {
@@ -43,6 +45,7 @@ const emails = [
     sentAt: 1280275200000,
     removedAt: null,
     from: 'zz5djndn6f86sa8@ymail.com',
+    fullName: "Bob Lucas",
     to: loggedinUser.email,
   },
   {
@@ -56,6 +59,7 @@ const emails = [
     sentAt: 1305676800000,
     removedAt: null,
     from: 'ubayd.avery@outlook.com',
+    fullName: "Ubayd Benson",
     to: loggedinUser.email,
   },
   {
@@ -69,6 +73,7 @@ const emails = [
     sentAt: 1404432000000,
     removedAt: null,
     from: 'sscewwvjyht@gmail.com',
+    fullName: "Vincent Clark",
     to: loggedinUser.email,
   },
 ]
