@@ -43,7 +43,7 @@
 .email-details .header .logo::before {
   content: '';
   user-select: none;
-  background-image: url('./icon.svg');
+  background-image: url('/icon.svg');
   background-size: cover;
   background-repeat: no-repeat;
   width: 40px;

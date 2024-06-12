@@ -39,7 +39,7 @@
 .email-list .logo::before {
   content: '';
   user-select: none;
-  background-image: url('./icon.svg');
+  background-image: url('/icon.svg');
   background-size: cover;
   background-repeat: no-repeat;
   width: 40px;
@@ -82,6 +82,7 @@
 
 .email-list .header .custom-search input {
   width: 100%;
+  min-width: 212px;
   height: auto;
   border: none;
   font-size: 16px;

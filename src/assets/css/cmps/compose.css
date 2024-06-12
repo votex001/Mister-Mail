@@ -13,6 +13,7 @@
   overflow: hidden;
   border-bottom: none;
   border-right: none;
+  z-index: 100;
 }
 
 .compose-dialog h1 {

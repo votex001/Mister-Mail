@@ -3,29 +3,56 @@
   user-select: none;
   cursor: pointer;
   align-items: center;
-  background-color: #fff;
   padding: 10px;
   border-top: 1px solid #666;
   position: relative;
 }
-.search-preview .profile-result:hover::before{
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 0;
-    height: 55px;
+.search-preview .profile-result:hover::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 55px;
   border-left: 3px solid #0b57d0;
 }
 .search-preview .profile-result .search-avatar {
   margin-right: 10px;
 }
-.search-preview .profile-result .profile-name{
-    font-weight: 500;
+.search-preview .profile-result .profile-name {
+  font-weight: 500;
 }
-.search-preview .profile-result .profile-mail{
-    color: #666;
+.search-preview .profile-result .profile-mail {
+  color: #666;
 }
-.search-preview .profile-result:hover .profile-name,
-.search-preview .profile-result:hover .profile-mail{
-    text-shadow: 0.1px 0.1px 0.1px #666;
+.search-preview .profile-result:hover > *,
+.search-preview .mail-resault:hover > * {
+  text-shadow: 0.1px 0.1px 0.1px #666;
+}
+.search-preview .mail-resault {
+  display: grid;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+  grid-template-columns: 40px minmax(100px,auto) min-content;
+  align-items: center;
+  padding: 10px;
+}
+.search-preview .mail-resault:hover::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 55px;
+  border-left: 3px solid #0b57d0;
+}
+.search-preview .mail-resault .mail-subject {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+.search-preview .mail-resault svg,
+.search-preview .mail-resault .mail-bottom {
+  color: #666;
 }

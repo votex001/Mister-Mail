@@ -16,7 +16,7 @@ export function HeaderDetails({ mail }) {
     const updatedMail = {
       ...mail,
       inTrash: !mail.inTrash,
-      onDraft: !mail.onDraft,
+      onDraft: false,
     }
     await mailService.save(updatedMail)
     goBack()

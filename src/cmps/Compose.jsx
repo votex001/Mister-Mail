@@ -31,7 +31,7 @@ export function Compose({ onGetNewNessage }) {
   async function onSubmit(e) {
     e.preventDefault()
     try {
-      await onGetNewNessage({ ...newMail, onDraft: false })
+      await onGetNewNessage({ ...newMail, ...mailService.allFalse() })
       navigate(`/${params.folder}`, { replace: true })
       showSuccessMsg('Your Message submited')
     } catch (error) {

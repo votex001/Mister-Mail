@@ -92,7 +92,7 @@ export function Header({ onSearchByName, mails }) {
           <img src={img} />
         </span>
         {isSearchFilterOpen && (
-          <SearchFilter searchValue={searchValue} mails={mails} />
+          <SearchFilter searchValue={searchValue} mails={mails} setIsSearchFilterOpen={setIsSearchFilterOpen} />
         )}
       </section>
 

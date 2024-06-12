@@ -13,6 +13,7 @@ export const mailService = {
   getCleanMail,
   sortMails,
   searchFounder,
+  allFalse
 }
 
 const STORAGE_KEY = 'emails'
@@ -64,10 +65,11 @@ async function query(filterBy, sortBy) {
   }
 }
 
-function searchFounder(mails, searchValue, sliceUser = 0, sliceMails = 0) {
+function searchFounder(mails, searchValue,filter, sliceUser = 0, sliceMails = 0) {
   const escapedSearchValue = searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const userRegExp = new RegExp(`\\b${escapedSearchValue}`, 'i')
   const regExp = new RegExp(escapedSearchValue, 'i')
+  console.log(filter)
   const result = {
     user: mails.filter((mail) => {
       const isFromMatch = userRegExp.test(mail.from)
@@ -90,6 +92,15 @@ function searchFounder(mails, searchValue, sliceUser = 0, sliceMails = 0) {
   }
   if (sliceMails > 0) {
     result.mails = result.mails.slice(0, sliceMails)
+  }
+  if(filter.sevenDaysAgo){
+    const now = new Date();
+    const sevenDaysAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
+    result.mails = result.mails.filter(mail=>(new Date(mail.sentAt) > sevenDaysAgo))
+  
+  }
+  if(filter.fromMe){
+    result.mails = result.mails.filter(mail=>(mail.from === defaultInfo.loggedinUser.email))
   }
 
   return result
@@ -152,6 +163,14 @@ function getCleanMail() {
     from: '',
     fullName: '',
     to: '',
+  }
+}
+function allFalse(){
+  return {
+    isRead: false,
+    isStarred: false,
+    inTrash: false,
+    onDraft: false
   }
 }
 function getDefaultFilter() {
