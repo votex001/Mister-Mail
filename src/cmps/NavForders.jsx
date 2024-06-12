@@ -32,7 +32,7 @@ export function NavFolders({ details }) {
               <div>
                 {folders[folderName]} {folder}{' '}
               </div>{' '}
-              {number}
+              {number&&<p>{number}</p>}
             </NavLink>
           </div>
         )

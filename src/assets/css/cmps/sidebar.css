@@ -58,14 +58,13 @@
   background-color: #c2e7ff;
 }
 
-
 .side-bar .folders a {
   text-decoration: none;
 }
 
 .side-bar .nav {
   justify-content: space-between;
-  color:  rgb(32, 33, 36);
+  color: rgb(32, 33, 36);
   align-items: center;
   padding: 0 12px 0 26px;
   width: 240px;
@@ -73,16 +72,23 @@
   gap: 5px;
   border-radius: 0 16px 16px 0;
 }
-.side-bar .nav div{
+.side-bar .nav div {
   height: 20px;
-  
 }
-.side-bar .nav svg{
+.side-bar .nav svg {
   font-size: 20px;
   margin-right: 18px;
+  color: #666;
 }
 
 .side-bar .active {
   background-color: var(--bg-color);
   transition: all 0.5s;
+}
+.side-bar .nav:has(p),
+.side-bar .nav:has(p) svg,
+.side-bar .active svg,
+.side-bar .active {
+  color: black;
+  font-weight: 600;
 }
