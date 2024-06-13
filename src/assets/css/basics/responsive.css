@@ -1,0 +1,51 @@
+@media (max-width:720px) {
+    .main-layout{
+        grid-template-columns: 5rem 1fr auto;
+    }
+    .header .logo{
+        margin-right: 18px;
+      }
+      .side-bar .compose-holder .compose{
+        padding: 0;
+        align-self: center;
+      }
+      .side-bar .active{
+        background: white;
+      }
+      .side-bar .active div{
+        background-color: var(--bg-color);
+        border-radius: 20px;
+       
+      }
+      .side-bar .nav div svg{
+        margin: auto;
+        font-size: 25px;
+      }
+      .side-bar .nav,.side-bar .folders div{
+        padding: 0;
+        height: 40px;
+      }
+      .side-bar .nav div{
+        margin-left: auto;
+        margin-right: 25px;
+        width: 40px;
+        height: 40px;
+      }
+      .side-bar .nav.notif{
+        position: relative;
+      }
+      
+      .side-bar .nav.notif div::after{
+        content: "";
+        position: absolute;
+        background-color: red;
+        width: 1px;
+        height: 1px;
+        padding: 5px;
+        border-radius: 50%;
+        top: 7px;
+        right: 30px;
+      }
+}
+
+  

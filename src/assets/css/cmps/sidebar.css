@@ -85,8 +85,8 @@
   background-color: var(--bg-color);
   transition: all 0.5s;
 }
-.side-bar .nav:has(p),
-.side-bar .nav:has(p) svg,
+.side-bar .nav.notif,
+.side-bar .nav.notif svg,
 .side-bar .active svg,
 .side-bar .active {
   color: black;

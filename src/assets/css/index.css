@@ -17,6 +17,9 @@
 @import './cmps/search-filter.css';
 @import './cmps/search-preview.css';
 
+/* Responsive */
+@import 'basics/responsive.css';
+
 :root {
   --bg-color: rgb(211, 227, 253);
   --top-header-height: 75px;

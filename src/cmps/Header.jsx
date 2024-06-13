@@ -5,17 +5,34 @@ import { useEffect, useRef, useState } from 'react'
 import { LetteredAvatar } from './LetteredAvatar'
 import { defaultInfo } from '../services/default-emails'
 import { SearchFilter } from './SearchFilter'
+import { SearchSettings } from './SearchSettings'
+
+import { useIsWith720p } from './useIsWith720p'
 
 export function Header({ onSearchByName, mails }) {
   const [searchParams] = useSearchParams()
   const [searchValue, setSearchValue] = useState(searchParams.get('txt') || '')
   const [isSettingOpen, setIsSettingOpen] = useState(false)
-  const mainSectionRef = useRef(null)
+  const isWith720p = useIsWith720p()
   const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false)
+  const mainSectionRef = useRef(null)
 
   useEffect(() => {
     setSearchValue(searchParams.get('txt') || '')
   }, [searchParams.get('txt')])
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!mainSectionRef.current.contains(event.target)) {
+        setIsSettingOpen(false)
+        setIsSearchFilterOpen(false)
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [mainSectionRef])
 
   const onChange = (e) => {
     setSearchValue(e.target.value)
@@ -34,43 +51,23 @@ export function Header({ onSearchByName, mails }) {
     if (searchValue) {
       onSearchByName(searchValue)
     }
-    onCloseSettings()
-    onCloseSearchFilter()
-  }
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!mainSectionRef.current.contains(event.target)) {
-        onCloseSettings()
-        onCloseSearchFilter()
-      }
-    }
-    document.addEventListener('click', handleClickOutside)
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-  }, [mainSectionRef])
-
-  function onCloseSettings() {
     setIsSettingOpen(false)
-  }
-
-  function onCloseSearchFilter() {
     setIsSearchFilterOpen(false)
   }
 
   function onOpenSettings() {
     setIsSettingOpen(true)
-    onCloseSearchFilter()
+    setIsSettingOpen(false)
   }
 
   function onOpenSearchFilter() {
     setIsSearchFilterOpen(true)
-    onCloseSettings()
+    setIsSettingOpen(false)
   }
 
   return (
     <div className="header">
-      <section className="logo">MisterMail</section>
+      <section className="logo">{isWith720p&&"MisterMail"}</section>
       <section
         className="custom-search"
         ref={mainSectionRef}
@@ -82,18 +79,25 @@ export function Header({ onSearchByName, mails }) {
         <input
           type="search"
           id="search-input"
-          autoComplete='off'
+          autoComplete="off"
           placeholder="Search inbox"
           onChange={onChange}
           onKeyDown={onHandleKeyDown}
           value={searchValue}
         />
-        <span className="settings" onClick={onOpenSettings}>
-          <img src={img} />
+
+        <span className="settings">
+          <img src={img} onClick={onOpenSettings} />
         </span>
+
         {isSearchFilterOpen && (
-          <SearchFilter searchValue={searchValue} mails={mails} setIsSearchFilterOpen={setIsSearchFilterOpen} />
+          <SearchFilter
+            searchValue={searchValue}
+            mails={mails}
+            setIsSearchFilterOpen={setIsSearchFilterOpen}
+          />
         )}
+        {isSettingOpen && <SearchSettings />}
       </section>
 
       <div className="profile-menu">

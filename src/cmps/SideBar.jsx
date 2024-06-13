@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { mailService } from '../services/mail.service'
 import { NavFolders } from './NavForders'
+import { useIsWith720p } from './useIsWith720p'
 
-// icons
-import { GoPencil } from 'react-icons/go'
 
 export function SideBar({mails }) {
+  const isWith720p = useIsWith720p()
   const [details, setDetails] = useState({
     unread: 0,
     bascket: 0,
@@ -43,10 +43,10 @@ export function SideBar({mails }) {
     <nav className={`side-bar `}>
       <div className="compose-holder">
         <div className="compose" onClick={onComposeClick}>
-          Compose
+         {isWith720p && 'Compose'}
         </div>
       </div>
-      <NavFolders details={details} />
+     <NavFolders details={details} />
     </nav>
   )
 }
