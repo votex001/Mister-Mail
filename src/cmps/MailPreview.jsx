@@ -9,6 +9,7 @@ import {
 } from 'react-icons/io'
 import { MdRestoreFromTrash } from 'react-icons/md'
 import { defaultInfo } from '../services/default-emails'
+import { useIsWith480p } from './useIsWith480p'
 import { useIsWith720p } from './useIsWith720p'
 
 export function MailPreview({
@@ -19,6 +20,7 @@ export function MailPreview({
   onRead,
   isRemovedAtTime,
 }) {
+  const isWith480p = useIsWith480p()
   const isWith720p = useIsWith720p()
   const [_, setSearchParams] = useSearchParams()
   const removedAtTime = isRemovedAtTime
@@ -29,7 +31,6 @@ export function MailPreview({
   function convertedName(name) {
     if (name === defaultInfo.loggedinUser.fullName) return 'Me'
     return name
-    
   }
   function onEdit() {
     if (!mail.onDraft) return
@@ -58,8 +59,8 @@ export function MailPreview({
         <h3 className={`name ${mail.onDraft ? 'draft' : ''}`}>
           {mail.onDraft ? 'Draft' : convertedName(mail.fullName)}
         </h3>
-       {isWith720p&& <p className="subject">{mail.subject}</p>}
-        <p className="date">{date}</p>
+        {isWith480p && <p className="subject">{mail.subject}</p>}
+        {isWith720p && <p className="date">{date}</p>}
       </Link>
       <button
         className="email-icon trash"
@@ -74,7 +75,13 @@ export function MailPreview({
           <IoMdTrash className="side-icon" />
         )}
       </button>
-      <button className="email-icon" onClick={() => onRead(mail)}>
+      <button
+        className="email-icon"
+        onClick={(e) => {
+          e.stopPropagation()
+          onRead(mail)
+        }}
+      >
         {mail.isRead ? (
           <IoMdMailUnread className="side-icon" />
         ) : (
@@ -83,8 +90,11 @@ export function MailPreview({
       </button>
       {mail.inTrash && (
         <button
-          className="email-icon removeh"
-          onClick={() => onRemove(mail.id)}
+          className="email-icon remove"
+          onClick={(e) => {
+            e.stopPropagation()
+            onRemove(mail.id)
+          }}
         >
           {<TiDeleteOutline className="side-icon" />}
         </button>

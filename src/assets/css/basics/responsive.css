@@ -1,64 +1,98 @@
-@media (max-width:720px) {
-    .main-layout{
-        grid-template-columns: 5rem 1fr auto;
-    }
-    .header .logo{
-        margin-right: 18px;
-      }
-      .side-bar .compose-holder .compose{
-        padding: 0;
-        align-self: center;
-      }
-      .side-bar .active{
-        background: white;
-      }
-      .side-bar .active div{
-        background-color: var(--bg-color);
-        border-radius: 20px;
-       
-      }
-      .side-bar .nav div svg{
-        margin: auto;
-        font-size: 25px;
-      }
-      .side-bar .nav,.side-bar .folders div{
-        padding: 0;
-        height: 40px;
-      }
-      .side-bar .nav div{
-        margin-left: auto;
-        margin-right: 25px;
-        width: 40px;
-        height: 40px;
-      }
-      .side-bar .nav.notif{
-        position: relative;
-      }
-      
-      .side-bar .nav.notif div::after{
-        content: "";
-        position: absolute;
-        background-color: red;
-        width: 1px;
-        height: 1px;
-        padding: 5px;
-        border-radius: 50%;
-        top: 7px;
-        right: 30px;
-      }
-      .compose-dialog {
-        width: 450px;
-      }
-      .email .date{
-        display: none;
-      }
-      .email .side-icon{
-        display: flex;
-      }
+@media (max-width: 720px) {
+  /* side bar smaller + no titles */
+  .main-layout {
+    grid-template-columns: 5rem 1fr auto;
+  }
+  /* logo no title + middle */
+  .header .logo {
+    margin-right: 18px;
+  }
+  /* compose button no title + img on middle */
+  .side-bar .compose-holder .compose {
+    padding: 0;
+    align-self: center;
+  }
+  /* sideBar no title + bigger icons + no number but red notif if has something inside */
+  .side-bar .active {
+    background: white;
+  }
+  /* active sideBar: now border only on image */
+  .side-bar .active div {
+    background-color: var(--bg-color);
+    border-radius: 20px;
+  }
+  .side-bar .nav div svg {
+    margin: auto;
+    font-size: 25px;
+  }
+  .side-bar .nav,
+  .side-bar .folders div {
+    padding: 0;
+    height: 40px;
+  }
+  .side-bar .nav div {
+    margin-left: auto;
+    margin-right: 25px;
+    width: 40px;
+    height: 40px;
+  }
+  /* red notification about messages inside */
+  .side-bar .nav.notif {
+    position: relative;
+  }
 
+  .side-bar .nav.notif div::after {
+    content: '';
+    position: absolute;
+    background-color: red;
+    width: 1px;
+    height: 1px;
+    padding: 5px;
+    border-radius: 50%;
+    top: 7px;
+    right: 30px;
+  }
+  /* compose from 500px to 450px */
+  .compose-dialog {
+    width: 450px;
+  }
+  /* grid of mail-preview */
+  .email {
+    grid-template-columns:
+      min-content max-content 1fr
+      repeat(2, min-content) 10px;
+  }
+
+  .email .link {
+    grid-column: 2 / span 2;
+  }
+  /* mail-preview hover unset */
+  .email .date {
+    display: none;
+  }
+  .email .side-icon {
+    display: flex;
+  }
+  .email.trash {
+    grid-template-columns: max-content minmax(80px, auto) repeat(
+        3,
+        min-content
+      ) 10px;
+  }
+  .email.trash .link {
+    grid-column: 1 / span 2;
+  }
+  .email .name {
+    min-width: unset;
+    margin-right: 20px;
+  }
+  .email:hover{
+    padding-right: 0;
+  }
 }
-@media (max-width:480px){
-  .compose-dialog{
+@media (max-width: 480px) {
+  /* compose from side to middle of page + smaller width */
+  .compose-dialog {
     width: 90%;
     min-width: 375px;
     position: absolute;
@@ -71,15 +105,9 @@
     margin: auto;
     padding: 20px 0;
   }
-  .compose-dialog .compose-form{
-    
+  .compose-dialog .compose-form {
     margin: auto;
     width: 90%;
     height: 90%;
-    
   }
- 
-  
 }
-
-  
