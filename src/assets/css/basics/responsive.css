@@ -49,6 +49,12 @@
       .compose-dialog {
         width: 450px;
       }
+      .email .date{
+        display: none;
+      }
+      .email .side-icon{
+        display: flex;
+      }
 
 }
 @media (max-width:480px){

@@ -10,7 +10,7 @@
 
 /* Components */
 @import './cmps/sidebar.css';
-@import './cmps/email-preview.css';
+@import './cmps/mail-preview.css';
 @import './cmps/compose.css';
 @import './cmps/user-msg.css';
 @import './cmps/sort-menu.css';
