@@ -82,7 +82,7 @@
 
 .email-list .header .custom-search input {
   width: 100%;
-  min-width: 212px;
+  min-width: 100px;
   height: auto;
   border: none;
   font-size: 16px;

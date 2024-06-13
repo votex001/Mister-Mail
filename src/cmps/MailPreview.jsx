@@ -9,6 +9,7 @@ import {
 } from 'react-icons/io'
 import { MdRestoreFromTrash } from 'react-icons/md'
 import { defaultInfo } from '../services/default-emails'
+import { useIsWith720p } from './useIsWith720p'
 
 export function MailPreview({
   mail,
@@ -18,6 +19,7 @@ export function MailPreview({
   onRead,
   isRemovedAtTime,
 }) {
+  const isWith720p = useIsWith720p()
   const [_, setSearchParams] = useSearchParams()
   const removedAtTime = isRemovedAtTime
     ? new Date(mail.removedAt).toJSON()
@@ -56,7 +58,7 @@ export function MailPreview({
         <h3 className={`name ${mail.onDraft ? 'draft' : ''}`}>
           {mail.onDraft ? 'Draft' : convertedName(mail.fullName)}
         </h3>
-        <p className="subject">{mail.subject}</p>
+       {isWith720p&& <p className="subject">{mail.subject}</p>}
         <p className="date">{date}</p>
       </Link>
       <button

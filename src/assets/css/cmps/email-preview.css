@@ -1,7 +1,7 @@
 .email {
   display: grid;
   grid-template-columns:
-    min-content max-content minmax(100px, auto) max-content
+    min-content max-content minmax(80px, auto) max-content
     repeat(2, min-content);
   padding: 10px 0 9px 0;
   position: relative;
@@ -22,7 +22,7 @@
   height: 20px;
 }
 .email.trash {
-  grid-template-columns: max-content minmax(200px, auto) max-content repeat(
+  grid-template-columns: max-content minmax(80px, auto) max-content repeat(
       3,
       min-content
     );
