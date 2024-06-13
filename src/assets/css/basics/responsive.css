@@ -46,6 +46,34 @@
         top: 7px;
         right: 30px;
       }
+      .compose-dialog {
+        width: 450px;
+      }
+
+}
+@media (max-width:480px){
+  .compose-dialog{
+    width: 90%;
+    min-width: 375px;
+    position: absolute;
+    top: 0;
+    height: max-content;
+    padding: 0;
+    border: 1px solid;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin: auto;
+    padding: 20px 0;
+  }
+  .compose-dialog .compose-form{
+    
+    margin: auto;
+    width: 90%;
+    height: 90%;
+    
+  }
+ 
+  
 }
 
   
