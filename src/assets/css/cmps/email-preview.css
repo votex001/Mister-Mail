@@ -1,7 +1,7 @@
 .email {
   display: grid;
   grid-template-columns:
-    min-content max-content minmax(200px, auto) max-content
+    min-content max-content minmax(100px, auto) max-content
     repeat(2, min-content);
   padding: 10px 0 9px 0;
   position: relative;
@@ -90,8 +90,21 @@
 .email a > *:not(div) {
   line-height: 20px;
   font-weight: 600;
-}
-.email.read a > *:not(div) {
-  font-weight: 400;
-  font-size: 14px;
-}
+  }
+  .email.read a > *:not(div) {
+    font-weight: 400;
+    font-size: 14px;
+    }
+    
+    .email:hover .date{
+      display: none;
+    }
+    .email .side-icon{
+      display: none;
+    }
+    .email:hover .side-icon{
+      display: flex;
+    }
+    .email:hover{
+      padding-right: 20px;
+    }

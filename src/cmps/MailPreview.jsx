@@ -18,7 +18,7 @@ export function MailPreview({
   onRead,
   isRemovedAtTime,
 }) {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [_, setSearchParams] = useSearchParams()
   const removedAtTime = isRemovedAtTime
     ? new Date(mail.removedAt).toJSON()
     : new Date(mail.sentAt).toJSON()

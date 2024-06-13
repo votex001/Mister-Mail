@@ -7,8 +7,10 @@ import { mailService } from '../services/mail.service'
 import img from '/icon.svg'
 import { LetteredAvatar } from './LetteredAvatar'
 import { defaultInfo } from '../services/default-emails'
+import { useIsWith720p } from './useIsWith720p'
 
 export function HeaderDetails({ mail }) {
+  const isWith720p = useIsWith720p()
   const navigate = useNavigate()
   const params = useParams()
 
@@ -37,7 +39,7 @@ export function HeaderDetails({ mail }) {
   return (
     <div className="header">
       <section className="logo">
-       MisterMail
+       {isWith720p&&'MisterMail'}
       </section>
       <div className="buttons">
         <IoArrowBack onClick={goBack} />
