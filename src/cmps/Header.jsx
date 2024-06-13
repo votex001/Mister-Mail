@@ -1,6 +1,6 @@
 import { CiSearch } from 'react-icons/ci'
 import img from '/settings.svg'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { LetteredAvatar } from './LetteredAvatar'
 import { defaultInfo } from '../services/default-emails'
@@ -8,6 +8,7 @@ import { SearchFilter } from './SearchFilter'
 import { SearchSettings } from './SearchSettings'
 
 import { useIsWith720p } from './useIsWith720p'
+import { IoIosHelpCircleOutline } from 'react-icons/io'
 
 export function Header({ onSearchByName, mails }) {
   const [searchParams] = useSearchParams()
@@ -67,7 +68,7 @@ export function Header({ onSearchByName, mails }) {
 
   return (
     <div className="header">
-      <section className="logo">{isWith720p&&"MisterMail"}</section>
+      <section className="logo">{isWith720p && 'MisterMail'}</section>
       <section
         className="custom-search"
         ref={mainSectionRef}
@@ -101,6 +102,9 @@ export function Header({ onSearchByName, mails }) {
       </section>
 
       <div className="profile-menu">
+        <Link to={'?compose=true&to=help@gmail.com&subject=Help'}>
+          <IoIosHelpCircleOutline />
+        </Link>
         <LetteredAvatar
           name={defaultInfo.loggedinUser.fullName}
           size="40px"

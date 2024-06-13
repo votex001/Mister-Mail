@@ -5,16 +5,18 @@ import { mailService } from '../services/mail.service'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export function Compose({ onGetNewNessage }) {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [newMail, setNewMail] = useState({
     ...mailService.getCleanMail(),
     isRead: true,
     fullName: defaultInfo.loggedinUser.fullName,
     from: defaultInfo.loggedinUser.email,
+    to: searchParams.get('to') || '',
+    subject: searchParams.get('subject') || '',
   })
   const [messageSaved, setMessageSaved] = useState(true)
   const params = useParams()
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
   const timeoutRef = useRef(null)
 
   useEffect(() => {
@@ -87,7 +89,7 @@ export function Compose({ onGetNewNessage }) {
     if (keys.some((key) => newMail[key] !== '' && !messageSaved)) {
       timeoutRef.current = setTimeout(async () => {
         try {
-          const res = await onGetNewNessage({ ...newMail, onDraft: true })
+          const res = await onGetNewNessage({ ...newMail, onDraft: true,inTrash:false })
           setMessageSaved(true)
           setNewMail({ ...res })
           showSuccessMsg('Your message saved in draft!')
