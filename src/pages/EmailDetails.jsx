@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { mailService } from '../services/mail.service'
 import { HeaderDetails } from '../cmps/HeaderDetails'
 import { Compose } from '../cmps/Compose'
@@ -42,7 +42,9 @@ function onGetNewNessage(newMessage) {
             <div className="email-info">
               <h2 className="email-subject">{mail.subject}</h2>
               <p className="email-from">{mail.from}</p>
-              <p className="email-to">{mail.to}</p>
+              <Link to={`?compose=true&to=${mail.to}`} className="email-to">
+              {mail.to}
+              </Link>
               <p className="email-date">
                 {new Date(mail.sentAt).toLocaleDateString()}
               </p>

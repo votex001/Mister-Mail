@@ -49,6 +49,8 @@ export function Compose({ onGetNewNessage }) {
         .then(() =>
           setSearchParams((prev) => {
             prev.delete('compose')
+            prev.delete('to')
+            prev.delete('subject')
             return prev
           })
         )
@@ -56,6 +58,8 @@ export function Compose({ onGetNewNessage }) {
     } else {
       setSearchParams((prev) => {
         prev.delete('compose')
+        prev.delete('to')
+        prev.delete('subject')
         return prev
       })
     }
@@ -89,7 +93,11 @@ export function Compose({ onGetNewNessage }) {
     if (keys.some((key) => newMail[key] !== '' && !messageSaved)) {
       timeoutRef.current = setTimeout(async () => {
         try {
-          const res = await onGetNewNessage({ ...newMail, onDraft: true,inTrash:false })
+          const res = await onGetNewNessage({
+            ...newMail,
+            onDraft: true,
+            inTrash: false,
+          })
           setMessageSaved(true)
           setNewMail({ ...res })
           showSuccessMsg('Your message saved in draft!')

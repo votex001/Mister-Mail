@@ -83,6 +83,10 @@
 .details-main .email-header .email-info .email-to {
   color: #666;
   font-size: 14px;
+  text-decoration: none;
+}
+.details-main .email-header .email-info .email-to:hover{
+  color: #111;
 }
 
 .details-main .email-body {
