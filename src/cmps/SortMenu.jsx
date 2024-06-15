@@ -8,8 +8,7 @@ import {
 } from 'react-icons/io'
 import { MdRestoreFromTrash } from 'react-icons/md'
 import { useParams } from 'react-router-dom'
-import { mailService } from '../services/mail.service'
-import { TiDeleteOutline } from 'react-icons/ti'
+import { showSuccessMsg } from '../services/event-bus.service'
 
 export function SortMenu({
   sortMails,
@@ -32,7 +31,6 @@ export function SortMenu({
 
   useEffect(() => {
     loadParams()
-    setSelectedMailIds([])
   }, [params])
 
   function setSortMails(sortName) {
@@ -56,13 +54,12 @@ export function SortMenu({
   }
   function onTrashClick() {
     if (params.folder !== 'bascket') {
+      showSuccessMsg(`${selectedMailIds.length} messages moved to trash`)
       updateAllSelectedMails({ inTrash: true, removedAt: new Date() })
     } else {
+      showSuccessMsg(`${selectedMailIds.length} messages moved from trash`)
       updateAllSelectedMails({ inTrash: false, removedAt: null })
     }
-  }
-  function onUnread() {
-    updateAllSelectedMails({ isRead: false })
   }
   function loadParams() {
     if (params.folder === 'unread' || params.folder === 'draft') {
@@ -81,12 +78,25 @@ export function SortMenu({
       setSortParams(basicSort)
     }
   }
+  function toggleRead(booleen){
+    if(!booleen){
+      showSuccessMsg(`${selectedMailIds.length} messages marked as unread`)
+      updateAllSelectedMails({ isRead: false })
+    }else{
+      showSuccessMsg(`${selectedMailIds.length} messages marked as read`)
+      updateAllSelectedMails({ isRead: true })
+    }
+  
+  }
 
   return (
-    <section className={`sort-menu ${!!selectedMailIds.length ? 'selected-menu' : ''}`}>
+    <section
+      className={`sort-menu ${!!selectedMailIds.length ? 'selected-menu' : ''}`}
+    >
       <input
         type="checkbox"
         checked={getIsAllChecked()}
+        disabled={!mails?.length}
         ref={inputRef}
         onChange={onToggleAllChecked}
       />
@@ -117,13 +127,13 @@ export function SortMenu({
           </button>
           <button
             className="select-button"
-            onClick={() => updateAllSelectedMails({ isRead: false })}
+            onClick={() => toggleRead(false)}
           >
             <IoMdMailUnread className="side-icon" />
           </button>
           <button
             className="select-button"
-            onClick={() => updateAllSelectedMails({ isRead: true })}
+            onClick={() => toggleRead(true)}
           >
             <IoMdMailOpen className="side-icon" />
           </button>

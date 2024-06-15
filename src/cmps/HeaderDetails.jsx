@@ -4,13 +4,12 @@ import { MdRestoreFromTrash } from 'react-icons/md'
 import { TiDeleteOutline } from 'react-icons/ti'
 import { useNavigate, useParams } from 'react-router'
 import { mailService } from '../services/mail.service'
-import img from '/icon.svg'
 import { LetteredAvatar } from './LetteredAvatar'
 import { defaultInfo } from '../services/default-emails'
-import { useIsWith720p } from './useIsWith720p'
+import { useWith720p } from '../custom-hooks/useWith720p'
 
 export function HeaderDetails({ mail }) {
-  const isWith720p = useIsWith720p()
+  const isWith720p = useWith720p()
   const navigate = useNavigate()
   const params = useParams()
 
@@ -38,9 +37,7 @@ export function HeaderDetails({ mail }) {
 
   return (
     <div className="header">
-      <section className="logo">
-       {isWith720p&&'MisterMail'}
-      </section>
+      <section className="logo">{isWith720p && 'MisterMail'}</section>
       <div className="buttons">
         <IoArrowBack onClick={goBack} />
         <IoMdMailUnread onClick={onSetUnread} />
@@ -52,7 +49,11 @@ export function HeaderDetails({ mail }) {
         {mail?.inTrash && <TiDeleteOutline onClick={onDeleteForever} />}
       </div>
       <div>
-        <LetteredAvatar name={defaultInfo.loggedinUser.fullName} size="40px" className="profile-img"/>
+        <LetteredAvatar
+          name={defaultInfo.loggedinUser.fullName}
+          size="40px"
+          className="profile-img"
+        />
       </div>
     </div>
   )

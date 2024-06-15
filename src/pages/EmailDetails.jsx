@@ -8,7 +8,7 @@ import { LetteredAvatar } from '../cmps/LetteredAvatar'
 export function EmailDetails() {
   const [mail, setMail] = useState()
   const params = useParams()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     getMail()

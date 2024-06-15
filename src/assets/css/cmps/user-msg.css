@@ -6,14 +6,15 @@
   padding: 20px 30px;
   margin-right: auto;
   border-radius: 10px;
+  animation: appear 1s;
+  z-index: 1000;
 }
 .user-msg.success {
-  background-color: rgba(0, 128, 0, 0.3);
-  animation: appear 1s;
+  background-color: rgba(0, 128, 0, 0.5);
 }
 .user-msg.error {
-  background-color: rgba(255, 0, 0, 0.3);
-  animation: appear 1s;
+  background-color: rgba(255, 0, 0, 0.5);
+ 
 }
 .user-msg .close-user-message {
   position: absolute;

@@ -6,16 +6,16 @@ import { LetteredAvatar } from './LetteredAvatar'
 import { defaultInfo } from '../services/default-emails'
 import { SearchFilter } from './SearchFilter'
 import { SearchSettings } from './SearchSettings'
-
-import { useIsWith720p } from './useIsWith720p'
 import { IoIosHelpCircleOutline } from 'react-icons/io'
+import { useWith720p } from '../custom-hooks/useWith720p'
+import { useToggle } from '../custom-hooks/useToggle'
 
 export function Header({ onSearchByName, mails }) {
   const [searchParams] = useSearchParams()
   const [searchValue, setSearchValue] = useState(searchParams.get('txt') || '')
-  const [isSettingOpen, setIsSettingOpen] = useState(false)
-  const isWith720p = useIsWith720p()
-  const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false)
+  const isWith720p = useWith720p()
+  const [isSettingOpen, setIsSettingOpen] = useToggle(false)
+  const [isSearchFilterOpen, setIsSearchFilterOpen] = useToggle(false)
   const mainSectionRef = useRef(null)
 
   useEffect(() => {

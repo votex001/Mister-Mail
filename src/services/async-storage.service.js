@@ -4,7 +4,7 @@ export const storageService = {
   post,
   put,
   remove,
-  updateAll
+  updateAll,
 }
 
 function query(entityType, delay = 200) {
@@ -57,19 +57,22 @@ function remove(entityType, entityId) {
     _save(entityType, entities)
   })
 }
-function updateAll(entityType, updatedArrayId,updatedParam) {
-  return query(entityType).then((entities) => {
-   entities = entities.map((mail) => {
-      if (!updatedArrayId.includes(mail.id)) return mail
-      return { ...mail,...updatedParam }
+function updateAll(entityType, updatedArrayId, updatedParam) {
+  try {
+    return query(entityType).then((entities) => {
+      entities = entities.map((mail) => {
+        if (!updatedArrayId.includes(mail.id)) return mail
+        return { ...mail, ...updatedParam }
+      })
+
+      _save(entityType, entities)
+      return entities
     })
-    
-    _save(entityType, entities)
-    return entities
-  })
+  } catch (err) {
+    console.error(err)
+    return err
+  }
 }
-
-
 
 // Private functions
 

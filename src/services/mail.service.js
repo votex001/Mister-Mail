@@ -14,7 +14,7 @@ export const mailService = {
   sortMails,
   searchFounder,
   allFalse,
-  updateAll
+  updateAll,
 }
 
 const STORAGE_KEY = 'emails'
@@ -66,7 +66,13 @@ async function query(filterBy, sortBy) {
   }
 }
 
-function searchFounder(mails, searchValue,filter, sliceUser = 0, sliceMails = 0) {
+function searchFounder(
+  mails,
+  searchValue,
+  filter,
+  sliceUser = 0,
+  sliceMails = 0
+) {
   const escapedSearchValue = searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const userRegExp = new RegExp(`\\b${escapedSearchValue}`, 'i')
   const regExp = new RegExp(escapedSearchValue, 'i')
@@ -94,14 +100,17 @@ function searchFounder(mails, searchValue,filter, sliceUser = 0, sliceMails = 0)
   if (sliceMails > 0) {
     result.mails = result.mails.slice(0, sliceMails)
   }
-  if(filter.sevenDaysAgo){
-    const now = new Date();
-    const sevenDaysAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
-    result.mails = result.mails.filter(mail=>(new Date(mail.sentAt) > sevenDaysAgo))
-  
+  if (filter.sevenDaysAgo) {
+    const now = new Date()
+    const sevenDaysAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000
+    result.mails = result.mails.filter(
+      (mail) => new Date(mail.sentAt) > sevenDaysAgo
+    )
   }
-  if(filter.fromMe){
-    result.mails = result.mails.filter(mail=>(mail.from === defaultInfo.loggedinUser.email))
+  if (filter.fromMe) {
+    result.mails = result.mails.filter(
+      (mail) => mail.from === defaultInfo.loggedinUser.email
+    )
   }
 
   return result
@@ -166,12 +175,12 @@ function getCleanMail() {
     to: '',
   }
 }
-function allFalse(){
+function allFalse() {
   return {
     isRead: false,
     isStarred: false,
     inTrash: false,
-    onDraft: false
+    onDraft: false,
   }
 }
 function getDefaultFilter() {
@@ -219,8 +228,13 @@ function remove(id) {
   return storageService.remove(STORAGE_KEY, id)
 }
 
-function updateAll(updatedArrayId,updatedParam){
-  return storageService.updateAll(STORAGE_KEY,updatedArrayId,updatedParam)
+function updateAll(updatedArrayId, updatedParam) {
+  try {
+    return storageService.updateAll(STORAGE_KEY, updatedArrayId, updatedParam)
+  } catch (err) {
+    console.error(err)
+    return err
+  }
 }
 
 // Save an email (update or create)

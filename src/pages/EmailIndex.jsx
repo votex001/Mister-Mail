@@ -7,6 +7,7 @@ import { MailList } from '../cmps/MailList'
 import { Header } from '../cmps/Header'
 import { Compose } from '../cmps/Compose'
 import { SortMenu } from '../cmps/SortMenu'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export function EmailIndex() {
   const [mails, setMails] = useState(null)
@@ -85,8 +86,12 @@ export function EmailIndex() {
     })
   }
   function updateAllSelectedMails(updateParam) {
-    mailService.updateAll(selectedMailIds, updateParam).then(loadEmails)
-    setSelectedMailIds([])
+    try {
+      mailService.updateAll(selectedMailIds, updateParam).then(updateFilter)
+    } catch (err) {
+      console.error(err)
+      showErrorMsg('Have some issues, check console.')
+    }
   }
 
   function updateFilter() {
@@ -98,6 +103,7 @@ export function EmailIndex() {
       ...mailService.buildFilter(params.folder),
       filterByName: searchParams.get('txt'),
     })
+    setSelectedMailIds([])
   }
 
   async function loadEmails() {

@@ -9,10 +9,10 @@ import {
 } from 'react-icons/ri'
 import { VscSend } from 'react-icons/vsc'
 import { NavLink, useParams } from 'react-router-dom'
-import { useIsWith720p } from './useIsWith720p'
+import { useWith720p } from '../custom-hooks/useWith720p'
 
 export function NavFolders({ details }) {
-  const isWith720p = useIsWith720p()
+  const isWith720p = useWith720p()
   const params = useParams()
   const folders = {
     all: params.folder === 'all' ? <RiInbox2Fill /> : <RiInbox2Line />,
