@@ -6,22 +6,23 @@ import { SideBar } from '../cmps/SideBar'
 import { MailList } from '../cmps/MailList'
 import { Header } from '../cmps/Header'
 import { Compose } from '../cmps/Compose'
+import { SortMenu } from '../cmps/SortMenu'
 
 export function EmailIndex() {
   const [mails, setMails] = useState(null)
   const [filter, setFilter] = useState(mailService.getDefaultFilter())
   const [sortBy, setSortBy] = useState({ by: 'date', dir: 1 })
+  const [selectedMailIds, setSelectedMailIds] = useState([])
   const navigate = useNavigate()
   const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
-
   useEffect(() => {
     updateFilter()
   }, [params, searchParams])
 
   useEffect(() => {
     loadEmails()
-  }, [filter,sortBy])
+  }, [filter, sortBy])
 
   async function onToggleStar(mail) {
     const updatedMail = {
@@ -58,7 +59,6 @@ export function EmailIndex() {
   }
 
   function onSearchByName(name) {
-    
     if (name) {
       setSearchParams((prev) => {
         prev.set('txt', name)
@@ -77,6 +77,17 @@ export function EmailIndex() {
       return res
     })
   }
+  function onToggleSelectMail(mailId) {
+    setSelectedMailIds((prevSelected) => {
+      if (prevSelected.includes(mailId))
+        return prevSelected.filter((id) => id !== mailId)
+      else return [...prevSelected, mailId]
+    })
+  }
+  function updateAllSelectedMails(updateParam) {
+    mailService.updateAll(selectedMailIds, updateParam).then(loadEmails)
+    setSelectedMailIds([])
+  }
 
   function updateFilter() {
     if (!mailService.buildFilter(params.folder)) {
@@ -90,12 +101,14 @@ export function EmailIndex() {
   }
 
   async function loadEmails() {
-    const data = await mailService.query(filter,sortBy)
+    const data = await mailService.query(filter, sortBy)
     setMails(data)
   }
 
   function sortMails(sortBy) {
-    setSortBy(prev=>{return{...prev,...sortBy}})
+    setSortBy((prev) => {
+      return { ...prev, ...sortBy }
+    })
   }
   return (
     <div className="email-index">
@@ -105,11 +118,19 @@ export function EmailIndex() {
           {searchParams.get('compose') && (
             <Compose onGetNewNessage={onGetNewNessage} />
           )}
-          <Header onSearchByName={onSearchByName} mails={mails}/>
-          <MailList
-            mails={mails}
+          <Header onSearchByName={onSearchByName} mails={mails} />
+          <SortMenu
             sortMails={sortMails}
             sortBy={sortBy}
+            updateAllSelectedMails={updateAllSelectedMails}
+            mails={mails}
+            selectedMailIds={selectedMailIds}
+            setSelectedMailIds={setSelectedMailIds}
+          />
+          <MailList
+            mails={mails}
+            selectedMailIds={selectedMailIds}
+            onToggleSelectMail={onToggleSelectMail}
             isRemovedAtTime={params.folder === 'bascket'}
             onToggleStar={onToggleStar}
             onSendToTrash={onSendToTrash}

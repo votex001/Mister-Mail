@@ -1,3 +1,12 @@
+.sort-menu{
+  grid-area: s;
+  display: flex;
+  align-content: center;
+}
+.sort-menu.selected-menu > button{
+width: auto;
+}
+
 .sort-menu > button {
   display: inline-flex;
   align-items: center;

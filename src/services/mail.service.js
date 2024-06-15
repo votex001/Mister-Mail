@@ -13,7 +13,8 @@ export const mailService = {
   getCleanMail,
   sortMails,
   searchFounder,
-  allFalse
+  allFalse,
+  updateAll
 }
 
 const STORAGE_KEY = 'emails'
@@ -216,6 +217,10 @@ function getById(id) {
 // Remove an email by ID
 function remove(id) {
   return storageService.remove(STORAGE_KEY, id)
+}
+
+function updateAll(updatedArrayId,updatedParam){
+  return storageService.updateAll(STORAGE_KEY,updatedArrayId,updatedParam)
 }
 
 // Save an email (update or create)

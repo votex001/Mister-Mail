@@ -19,6 +19,8 @@ export function MailPreview({
   onRemove,
   onRead,
   isRemovedAtTime,
+  onToggleSelectMail,
+  selectedMailIds,
 }) {
   const isWith480p = useIsWith480p()
   const isWith720p = useIsWith720p()
@@ -27,6 +29,10 @@ export function MailPreview({
     ? new Date(mail.removedAt).toJSON()
     : new Date(mail.sentAt).toJSON()
   const date = new Date(removedAtTime).toLocaleDateString()
+
+  function getMailIsChecked() {
+    return selectedMailIds.includes(mail.id)
+  }
 
   function convertedName(name) {
     if (name === defaultInfo.loggedinUser.fullName) return 'Me'
@@ -39,13 +45,19 @@ export function MailPreview({
       return prev
     })
   }
+
   return (
     <section
-      className={`email ${mail.isRead ? 'read' : ''} ${
-        mail.inTrash ? 'trash' : ''
-      }`}
+      className={`email ${mail.isRead ? 'read' : ''} 
+      ${mail.inTrash ? 'trash' : ''} `}
       onClick={onEdit}
     >
+      <input
+        type="checkbox"
+        onClick={(ev) => ev.stopPropagation()}
+        onChange={() => onToggleSelectMail(mail.id)}
+        checked={getMailIsChecked()}
+      />
       {!mail.inTrash && (
         <button className="email-icon star" onClick={() => onToggleStar(mail)}>
           {mail.isStarred ? (

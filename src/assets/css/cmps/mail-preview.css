@@ -1,7 +1,7 @@
 .email {
   display: grid;
   grid-template-columns:
-    min-content max-content minmax(80px, auto) max-content
+  min-content min-content max-content minmax(80px, auto) max-content
     repeat(2, min-content);
   padding: 10px 0 9px 0;
   position: relative;
@@ -14,7 +14,7 @@
 }
 .email .link {
   display: grid;
-  grid-column: 2 / span 3;
+  grid-column: 3 / span 3;
   grid-template-columns: subgrid;
   text-decoration: none;
   align-items: center;
@@ -22,13 +22,13 @@
   height: 20px;
 }
 .email.trash {
-  grid-template-columns: max-content minmax(80px, auto) max-content repeat(
+  grid-template-columns: min-content max-content minmax(80px, auto) max-content repeat(
       3,
       min-content
     );
 }
 .email.trash .link {
-  grid-column: 1 / span 3;
+  grid-column: 2 / span 3;
 }
 
 .email .email-icon {
