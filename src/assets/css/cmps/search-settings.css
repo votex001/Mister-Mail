@@ -14,9 +14,7 @@
   z-index: 4;
 }
 
-.custom-search .search-settings {
-  /* Add your styles here */
-}
+
 
 .custom-search .search-settings .search-form {
   /* Add your styles here */
@@ -27,9 +25,6 @@
   flex-direction: column;
 }
 
-.custom-search .search-settings .include-lbl {
-  /* Add your styles here */
-}
 
 .search-settings .settings-txt {
   /* Add your styles here */
