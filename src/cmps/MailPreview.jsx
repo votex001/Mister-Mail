@@ -9,8 +9,6 @@ import {
 } from 'react-icons/io'
 import { MdRestoreFromTrash } from 'react-icons/md'
 import { defaultInfo } from '../services/default-emails'
-import { useWith480p } from '../custom-hooks/useWith480p'
-import { useWith720p } from '../custom-hooks/useWith720p'
 
 export function MailPreview({
   mail,
@@ -21,9 +19,9 @@ export function MailPreview({
   isRemovedAtTime,
   onToggleSelectMail,
   selectedMailIds,
+  isWith720p,
+  isWith480p
 }) {
-  const isWith480p = useWith480p()
-  const isWith720p = useWith720p()
   const [_, setSearchParams] = useSearchParams()
   const removedAtTime = isRemovedAtTime
     ? new Date(mail.removedAt).toJSON()

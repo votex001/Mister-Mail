@@ -15,6 +15,9 @@ export const mailService = {
   searchFounder,
   allFalse,
   updateAll,
+  convertOption,
+  newCompose,
+  settingsFilter,
 }
 
 const STORAGE_KEY = 'emails'
@@ -29,7 +32,17 @@ async function query(filterBy, sortBy) {
 
   // Filter emails by properties (starred, read, in trash)
   if (filterBy) {
-    var { isStarred, isRead, inTrash, sent, filterByName, onDraft } = filterBy
+    var {
+      isStarred,
+      isRead,
+      inTrash,
+      sent,
+      filterByName,
+      onDraft,
+      before,
+      after,
+    } = filterBy
+
     emails = emails.filter((email) => {
       const filterByStar = isStarred === 'any' || email.isStarred === isStarred
       const filterByRead = isRead === 'any' || email.isRead === isRead
@@ -45,25 +58,46 @@ async function query(filterBy, sortBy) {
           ? (filterByName = defaultInfo.loggedinUser.email)
           : filterByName
       }
+
+      const filterByBefore = before ? email.sentAt <= Number(before) : true
+      const filterByAfter = after ? email.sentAt >= Number(after) : true
+
+      const regex = new RegExp(filterSearch, 'i')
       return (
+        filterByBefore &&
+        filterByAfter &&
         filterByStar &&
         filterByRead &&
         filterByInTrash &&
         filterByDraft &&
         filterBysent &&
-        (email.from.toLowerCase().includes(filterSearch) ||
-          email.subject.toLowerCase().includes(filterSearch) ||
-          email.body.toLowerCase().includes(filterSearch))
+        (regex.test(email.from) ||
+          regex.test(email.subject) ||
+          regex.test(email.body))
       )
     })
   }
-
   // Return filtered emails
   if (!sortBy) {
     return emails.sort((a, b) => b.sentAt - a.sentAt)
   } else {
     return sortMails(emails, sortBy)
   }
+}
+function settingsFilter(mails, sortBy) {
+  return mails.filter((mail) => {
+    let isValid = true
+
+    if (sortBy.before) {
+      const before = isValid && mail.sentAt < sortBy.before
+    }
+
+    if (sortBy.after) {
+      const after = isValid && mail.sentAt > sortBy.after
+    }
+
+    return isValid
+  })
 }
 
 function searchFounder(
@@ -76,7 +110,6 @@ function searchFounder(
   const escapedSearchValue = searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const userRegExp = new RegExp(`\\b${escapedSearchValue}`, 'i')
   const regExp = new RegExp(escapedSearchValue, 'i')
-  console.log(filter)
   const result = {
     user: mails.filter((mail) => {
       const isFromMatch = userRegExp.test(mail.from)
@@ -160,6 +193,37 @@ function sortMails(mails, sortBy) {
   return mails
 }
 
+function convertOption(value) {
+  switch (value) {
+    case '1day':
+      return new Date().getTime() - 24 * 60 * 60 * 1000
+      break
+    case '3days':
+      return new Date().getTime() - 3 * 24 * 60 * 60 * 1000
+      break
+    case '1week':
+      return new Date().getTime() - 7 * 24 * 60 * 60 * 1000
+      break
+    case '2weeks':
+      return new Date().getTime() - 14 * 24 * 60 * 60 * 1000
+      break
+    case '1month':
+      return new Date().getTime() - 30 * 24 * 60 * 60 * 1000
+      break
+    case '2month':
+      return new Date().getTime() - 60 * 24 * 60 * 60 * 1000
+      break
+    case '6month':
+      return new Date().getTime() - 180 * 24 * 60 * 60 * 1000
+      break
+    case '1year':
+      return new Date().getTime() - 365 * 24 * 60 * 60 * 1000
+      break
+    default:
+      return new Date().getTime()
+  }
+}
+
 function getCleanMail() {
   return {
     subject: '',
@@ -203,6 +267,14 @@ function buildFilter(folder) {
     draft: { onDraft: true },
   }
   return filterMap[folder]
+}
+function newCompose() {
+  return {
+    ...getCleanMail(),
+    isRead: true,
+    fullName: defaultInfo.loggedinUser.fullName,
+    from: defaultInfo.loggedinUser.email,
+  }
 }
 async function emailsCounter() {
   const emails = await query()
@@ -263,6 +335,7 @@ function _createEmails() {
   if (!emails || !emails.length) {
     // Load default emails and sort by sentAt date
     emails = defaultInfo.emails
+    console.log(emails)
     utilService.saveToStorage(STORAGE_KEY, emails)
   }
 }

@@ -6,10 +6,8 @@ import { useNavigate, useParams } from 'react-router'
 import { mailService } from '../services/mail.service'
 import { LetteredAvatar } from './LetteredAvatar'
 import { defaultInfo } from '../services/default-emails'
-import { useWith720p } from '../custom-hooks/useWith720p'
 
-export function HeaderDetails({ mail }) {
-  const isWith720p = useWith720p()
+export function HeaderDetails({ mail, isWith720p }) {
   const navigate = useNavigate()
   const params = useParams()
 

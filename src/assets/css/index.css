@@ -16,6 +16,7 @@
 @import './cmps/sort-menu.css';
 @import './cmps/search-filter.css';
 @import './cmps/search-preview.css';
+@import './cmps/search-settings.css';
 
 /* Responsive */
 @import 'basics/responsive.css';

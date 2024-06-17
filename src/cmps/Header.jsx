@@ -7,15 +7,13 @@ import { defaultInfo } from '../services/default-emails'
 import { SearchFilter } from './SearchFilter'
 import { SearchSettings } from './SearchSettings'
 import { IoIosHelpCircleOutline } from 'react-icons/io'
-import { useWith720p } from '../custom-hooks/useWith720p'
-import { useToggle } from '../custom-hooks/useToggle'
+import { useToggle } from '../custom-hooks/custom-hooks'
 
-export function Header({ onSearchByName, mails }) {
+export function Header({ onSearchByName, mails, isWith720p }) {
   const [searchParams] = useSearchParams()
   const [searchValue, setSearchValue] = useState(searchParams.get('txt') || '')
-  const isWith720p = useWith720p()
-  const [isSettingOpen, setIsSettingOpen] = useToggle(false)
-  const [isSearchFilterOpen, setIsSearchFilterOpen] = useToggle(false)
+  const [isSettingOpen, setIsSetting] = useToggle(false)
+  const [isSearchFilterOpen, setIsSearchFilter] = useToggle(false)
   const mainSectionRef = useRef(null)
 
   useEffect(() => {
@@ -25,8 +23,8 @@ export function Header({ onSearchByName, mails }) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!mainSectionRef.current.contains(event.target)) {
-        setIsSettingOpen(false)
-        setIsSearchFilterOpen(false)
+        setIsSetting(false)
+        setIsSearchFilter(false)
       }
     }
     document.addEventListener('click', handleClickOutside)
@@ -52,32 +50,29 @@ export function Header({ onSearchByName, mails }) {
     if (searchValue) {
       onSearchByName(searchValue)
     }
-    setIsSettingOpen(false)
-    setIsSearchFilterOpen(false)
+    setIsSetting(false)
+    setIsSearchFilter(false)
   }
 
   function onOpenSettings() {
-    setIsSettingOpen(true)
-    setIsSettingOpen(false)
+    setIsSetting(true)
+    setIsSearchFilter(false)
   }
 
   function onOpenSearchFilter() {
-    setIsSearchFilterOpen(true)
-    setIsSettingOpen(false)
+    setIsSearchFilter(true)
+    setIsSetting(false)
   }
 
   return (
     <div className="header">
       <section className="logo">{isWith720p && 'MisterMail'}</section>
-      <section
-        className="custom-search"
-        ref={mainSectionRef}
-        onFocus={onOpenSearchFilter}
-      >
+      <section className="custom-search" ref={mainSectionRef}>
         <span className="search-logo" onClick={onSearch}>
           <CiSearch />
         </span>
         <input
+          onFocus={onOpenSearchFilter}
           type="search"
           id="search-input"
           autoComplete="off"
@@ -87,15 +82,15 @@ export function Header({ onSearchByName, mails }) {
           value={searchValue}
         />
 
-        <span className="settings">
-          <img src={img} onClick={onOpenSettings} />
+        <span className="settings" onClick={onOpenSettings}>
+          <img src={img} />
         </span>
 
         {isSearchFilterOpen && (
           <SearchFilter
             searchValue={searchValue}
             mails={mails}
-            setIsSearchFilterOpen={setIsSearchFilterOpen}
+            setIsSearchFilterOpen={setIsSearchFilter}
           />
         )}
         {isSettingOpen && <SearchSettings />}

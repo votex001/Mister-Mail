@@ -97,7 +97,7 @@
     padding-right: 0;
   }
   /* sort menu */
-  .sort-menu > input{
+  .sort-menu > .sort-checkbox{
     margin-right: 15px;
   }
   .sort-menu > button {

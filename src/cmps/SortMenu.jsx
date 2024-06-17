@@ -55,7 +55,7 @@ export function SortMenu({
   function onTrashClick() {
     if (params.folder !== 'bascket') {
       showSuccessMsg(`${selectedMailIds.length} messages moved to trash`)
-      updateAllSelectedMails({ inTrash: true, removedAt: new Date() })
+      updateAllSelectedMails({ inTrash: true, removedAt: new Date().getTime() })
     } else {
       showSuccessMsg(`${selectedMailIds.length} messages moved from trash`)
       updateAllSelectedMails({ inTrash: false, removedAt: null })
@@ -94,6 +94,7 @@ export function SortMenu({
       className={`sort-menu ${!!selectedMailIds.length ? 'selected-menu' : ''}`}
     >
       <input
+      className='sort-checkbox'
         type="checkbox"
         checked={getIsAllChecked()}
         disabled={!mails?.length}

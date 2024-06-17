@@ -7,9 +7,12 @@ import { MailList } from '../cmps/MailList'
 import { Header } from '../cmps/Header'
 import { Compose } from '../cmps/Compose'
 import { SortMenu } from '../cmps/SortMenu'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import { showErrorMsg } from '../services/event-bus.service'
+import { useEffectUpdate, useWith480p, useWith720p } from '../custom-hooks/custom-hooks'
 
 export function EmailIndex() {
+  const isWith720p = useWith720p()
+  const isWith480p = useWith480p()
   const [mails, setMails] = useState(null)
   const [filter, setFilter] = useState(mailService.getDefaultFilter())
   const [sortBy, setSortBy] = useState({ by: 'date', dir: 1 })
@@ -21,7 +24,7 @@ export function EmailIndex() {
     updateFilter()
   }, [params, searchParams])
 
-  useEffect(() => {
+  useEffectUpdate(() => {
     loadEmails()
   }, [filter, sortBy])
 
@@ -40,7 +43,7 @@ export function EmailIndex() {
       inTrash: !mail.inTrash,
       isRead: true,
       isStarred: false,
-      removedAt: mail.inTrash ? null : new Date(),
+      removedAt: mail.inTrash ? null : new Date().getTime(),
     }
     await mailService.save(updatedMail)
     updateFilter()
@@ -94,15 +97,27 @@ export function EmailIndex() {
     }
   }
 
+  function sortMails(sortBy) {
+    setSortBy((prev) => {
+      return { ...prev, ...sortBy }
+    })
+  }
+
   function updateFilter() {
     if (!mailService.buildFilter(params.folder)) {
       return navigate('/all', { replace: true })
     }
-    setFilter({
+    const newFilter = {
       ...mailService.getDefaultFilter(),
       ...mailService.buildFilter(params.folder),
       filterByName: searchParams.get('txt'),
-    })
+      before: searchParams.get('before'),
+      after: searchParams.get('after'),
+    }
+    // update filter only if have some changes
+    if (JSON.stringify(filter) !== JSON.stringify(newFilter)) {
+      setFilter(newFilter)
+    }
     setSelectedMailIds([])
   }
 
@@ -111,20 +126,19 @@ export function EmailIndex() {
     setMails(data)
   }
 
-  function sortMails(sortBy) {
-    setSortBy((prev) => {
-      return { ...prev, ...sortBy }
-    })
-  }
   return (
     <div className="email-index">
-      <SideBar mails={mails} />
+      <SideBar mails={mails} isWith720p={isWith720p} />
       {!params.mailId ? (
         <ul className="email-list">
           {searchParams.get('compose') && (
             <Compose onGetNewNessage={onGetNewNessage} />
           )}
-          <Header onSearchByName={onSearchByName} mails={mails} />
+          <Header
+            onSearchByName={onSearchByName}
+            mails={mails}
+            isWith720p={isWith720p}
+          />
           <SortMenu
             sortMails={sortMails}
             sortBy={sortBy}
@@ -134,6 +148,8 @@ export function EmailIndex() {
             setSelectedMailIds={setSelectedMailIds}
           />
           <MailList
+            isWith480p={isWith480p}
+            isWith720p={isWith720p}
             mails={mails}
             selectedMailIds={selectedMailIds}
             onToggleSelectMail={onToggleSelectMail}

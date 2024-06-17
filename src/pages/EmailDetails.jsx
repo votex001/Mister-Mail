@@ -4,8 +4,10 @@ import { mailService } from '../services/mail.service'
 import { HeaderDetails } from '../cmps/HeaderDetails'
 import { Compose } from '../cmps/Compose'
 import { LetteredAvatar } from '../cmps/LetteredAvatar'
+import { useWith720p } from '../custom-hooks/custom-hooks'
 
 export function EmailDetails() {
+  const isWith720p = useWith720p()
   const [mail, setMail] = useState()
   const params = useParams()
   const [searchParams] = useSearchParams()
@@ -13,8 +15,8 @@ export function EmailDetails() {
   useEffect(() => {
     getMail()
   }, [params.mailId])
-function onGetNewNessage(newMessage) {
-    return mailService.save(newMessage).then((res)=>{
+  function onGetNewNessage(newMessage) {
+    return mailService.save(newMessage).then((res) => {
       getMail()
       return res
     })
@@ -32,7 +34,7 @@ function onGetNewNessage(newMessage) {
       {searchParams.get('compose') && (
         <Compose onGetNewNessage={onGetNewNessage} />
       )}
-      <HeaderDetails mail={mail} />
+      <HeaderDetails mail={mail} isWith720p={isWith720p} />
       {mail && (
         <div className="details-main">
           <div className="email-header">
@@ -43,7 +45,7 @@ function onGetNewNessage(newMessage) {
               <h2 className="email-subject">{mail.subject}</h2>
               <p className="email-from">{mail.from}</p>
               <Link to={`?compose=true&to=${mail.to}`} className="email-to">
-              {mail.to}
+                {mail.to}
               </Link>
               <p className="email-date">
                 {new Date(mail.sentAt).toLocaleDateString()}

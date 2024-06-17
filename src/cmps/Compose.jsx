@@ -7,10 +7,7 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 export function Compose({ onGetNewNessage }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const [newMail, setNewMail] = useState({
-    ...mailService.getCleanMail(),
-    isRead: true,
-    fullName: defaultInfo.loggedinUser.fullName,
-    from: defaultInfo.loggedinUser.email,
+    ...mailService.newCompose(),
     to: searchParams.get('to') || '',
     subject: searchParams.get('subject') || '',
   })
@@ -72,11 +69,12 @@ export function Compose({ onGetNewNessage }) {
 
   async function checkIfMessageNew() {
     const compose = searchParams.get('compose')
-    if ((compose && compose !== 'true') || newMail.id) {
+    const messageId = compose!== 'true'? compose : newMail.id
+    if (messageId) {
       mailService
-        .getById(compose !== 'true' ? compose : newMail.id)
-        .then((value) => {
-          if (value !== null) {
+       .getById(messageId)
+       .then((value) => {
+          if (value!== null) {
             setNewMail(value)
           }
         })

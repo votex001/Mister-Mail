@@ -1,23 +1,22 @@
 //services
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { mailService } from '../services/mail.service'
 import { NavFolders } from './NavForders'
-import { useWith720p } from '../custom-hooks/useWith720p'
 
-export function SideBar({ mails }) {
-  const isWith720p = useWith720p()
+export function SideBar({ mails, isWith720p }) {
   const [details, setDetails] = useState({
     unread: 0,
     bascket: 0,
     starred: 0,
     draft: 0,
   })
+  const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
     loadDetails()
-  }, [mails])
+  }, [params])
 
   function onComposeClick() {
     if (!searchParams.get('compose')) {
@@ -45,7 +44,7 @@ export function SideBar({ mails }) {
           {isWith720p && 'Compose'}
         </div>
       </div>
-      <NavFolders details={details} />
+      <NavFolders details={details} isWith720p={isWith720p} />
     </nav>
   )
 }
