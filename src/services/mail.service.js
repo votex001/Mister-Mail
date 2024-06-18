@@ -276,7 +276,8 @@ function newCompose() {
     from: defaultInfo.loggedinUser.email,
   }
 }
-function emailsCounter(emails) {
+async function emailsCounter() {
+  const emails = await query()
   if(emails){
 
     return emails?.reduce(
