@@ -55,6 +55,7 @@ export function EmailIndex() {
   }
 
   async function onRemove(id) {
+    if(confirm("Are you sure you want to delete the message permanently?"))
     await mailService.remove(id)
     updateFilter()
   }
