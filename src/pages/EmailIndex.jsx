@@ -21,6 +21,7 @@ export function EmailIndex() {
   const [filter, setFilter] = useState(mailService.getDefaultFilter())
   const [sortBy, setSortBy] = useState({ by: 'date', dir: 1 })
   const [selectedMailIds, setSelectedMailIds] = useState([])
+  const [details, setDetails] = useState(mailService.emailsCounter())
   const navigate = useNavigate()
   const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -122,15 +123,19 @@ export function EmailIndex() {
     setFilter(newFilter)
     setSelectedMailIds([])
   }
-
+  function loadDetails(data) {
+    const newDetails = mailService.emailsCounter(data)
+    setDetails(newDetails)
+  }
   async function loadEmails() {
     const data = await mailService.query(filter, sortBy)
     setMails(data)
+    loadDetails(data)
   }
 
   return (
     <div className="email-index">
-      <SideBar mails={mails} isWith720p={isWith720p} />
+      <SideBar mails={mails} isWith720p={isWith720p} details={details} />
       {!params.mailId ? (
         <ul className="email-list">
           {searchParams.get('compose') && (

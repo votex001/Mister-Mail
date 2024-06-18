@@ -276,18 +276,21 @@ function newCompose() {
     from: defaultInfo.loggedinUser.email,
   }
 }
-async function emailsCounter() {
-  const emails = await query()
-  return emails?.reduce(
-    (a, b) => {
-      if (!b.isRead && !b.inTrash) a.unread++
-      if (b.inTrash) a.bascket++
-      if (b.isStarred) a.starred++
-      if (b.onDraft && !b.inTrash) a.draft++
-      return a
-    },
-    { unread: 0, bascket: 0, starred: 0, draft: 0 }
-  )
+function emailsCounter(emails) {
+  if(emails){
+
+    return emails?.reduce(
+      (a, b) => {
+        if (!b.isRead && !b.inTrash) a.unread++
+        if (b.inTrash) a.bascket++
+        if (b.isStarred) a.starred++
+        if (b.onDraft && !b.inTrash) a.draft++
+        return a
+      },
+      { unread: 0, bascket: 0, starred: 0, draft: 0 }
+    )
+  }
+  return { unread: 0, bascket: 0, starred: 0, draft: 0 }
 }
 
 // Get an email by ID

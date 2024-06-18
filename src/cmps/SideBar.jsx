@@ -4,19 +4,9 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { mailService } from '../services/mail.service'
 import { NavFolders } from './NavForders'
 
-export function SideBar({ mails, isWith720p }) {
-  const [details, setDetails] = useState({
-    unread: 0,
-    bascket: 0,
-    starred: 0,
-    draft: 0,
-  })
+export function SideBar({ isWith720p, details }) {
   const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
-
-  useEffect(() => {
-    loadDetails()
-  }, [params])
 
   function onComposeClick() {
     if (!searchParams.get('compose')) {
@@ -30,11 +20,6 @@ export function SideBar({ mails, isWith720p }) {
         return prev
       })
     }
-  }
-
-  async function loadDetails() {
-    const newDetails = await mailService.emailsCounter()
-    setDetails(newDetails)
   }
 
   return (
