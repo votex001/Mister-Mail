@@ -35,7 +35,7 @@ export function HeaderDetails({ mail, isWith720p }) {
 
   return (
     <div className="header">
-      <section className="logo">{isWith720p && 'MisterMail'}</section>
+      <section className="logo" onClick={()=>navigate('/all', { replace: true })}>{isWith720p && 'MisterMail'}</section>
       <div className="buttons">
         <IoArrowBack onClick={goBack} />
         <IoMdMailUnread onClick={onSetUnread} />

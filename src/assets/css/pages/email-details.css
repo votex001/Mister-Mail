@@ -33,6 +33,7 @@
 }
 .email-details .header .logo {
   user-select: none;
+  cursor: pointer;
   justify-self: center;
   display: flex;
   align-items: center;

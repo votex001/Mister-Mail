@@ -5,6 +5,7 @@
   position: relative;
   grid-area: a;
   font-size: 14px;
+  z-index: 2;
 }
 
 .side-bar .folders div {

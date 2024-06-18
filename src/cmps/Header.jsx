@@ -1,6 +1,6 @@
 import { CiSearch } from 'react-icons/ci'
 import img from '/settings.svg'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { LetteredAvatar } from './LetteredAvatar'
 import { defaultInfo } from '../services/default-emails'
@@ -12,9 +12,11 @@ import { useToggle } from '../custom-hooks/custom-hooks'
 export function Header({ onSearchByName, mails, isWith720p }) {
   const [searchParams] = useSearchParams()
   const [searchValue, setSearchValue] = useState(searchParams.get('txt') || '')
+  const navigate = useNavigate()
   const [isSettingOpen, setIsSetting] = useToggle(false)
   const [isSearchFilterOpen, setIsSearchFilter] = useToggle(false)
   const mainSectionRef = useRef(null)
+  
 
   useEffect(() => {
     setSearchValue(searchParams.get('txt') || '')
@@ -66,7 +68,7 @@ export function Header({ onSearchByName, mails, isWith720p }) {
 
   return (
     <div className="header">
-      <section className="logo">{isWith720p && 'MisterMail'}</section>
+      <section className="logo" onClick={()=>navigate('/all', { replace: true })}>{isWith720p && 'MisterMail'}</section>
       <section className="custom-search" ref={mainSectionRef}>
         <span className="search-logo" onClick={onSearch}>
           <CiSearch />

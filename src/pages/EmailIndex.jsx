@@ -8,7 +8,11 @@ import { Header } from '../cmps/Header'
 import { Compose } from '../cmps/Compose'
 import { SortMenu } from '../cmps/SortMenu'
 import { showErrorMsg } from '../services/event-bus.service'
-import { useEffectUpdate, useWith480p, useWith720p } from '../custom-hooks/custom-hooks'
+import {
+  useEffectUpdate,
+  useWith480p,
+  useWith720p,
+} from '../custom-hooks/custom-hooks'
 
 export function EmailIndex() {
   const isWith720p = useWith720p()
@@ -115,9 +119,7 @@ export function EmailIndex() {
       after: searchParams.get('after'),
     }
     // update filter only if have some changes
-    if (JSON.stringify(filter) !== JSON.stringify(newFilter)) {
-      setFilter(newFilter)
-    }
+    setFilter(newFilter)
     setSelectedMailIds([])
   }
 
