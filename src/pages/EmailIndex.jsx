@@ -124,13 +124,12 @@ export function EmailIndex() {
     setSelectedMailIds([])
   }
   async function loadDetails() {
-    console.log("lol")
     const newDetails = await mailService.emailsCounter()
     setDetails(newDetails)
   }
   async function loadEmails() {
     const data = await mailService.query(filter, sortBy)
-    console.log(data)
+
     setMails(data)
     loadDetails()
   }
